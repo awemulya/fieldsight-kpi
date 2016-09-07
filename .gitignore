@@ -19,3 +19,4 @@ staticfiles
 .sass-cache
 webpack-stats.json
 .idea
+kobo_playground/local_settings.py

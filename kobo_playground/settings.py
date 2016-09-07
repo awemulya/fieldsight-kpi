@@ -426,3 +426,8 @@ KOBOCAT_DEFAULT_PERMISSION_CONTENT_TYPES = [
     ('api', 'organizationprofile'),
     ('logger', 'note'),
 ]
+
+try:
+    from local_settings import *  # nopep8
+except ImportError:
+    pass
