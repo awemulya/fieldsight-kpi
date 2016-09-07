@@ -20,3 +20,4 @@ staticfiles
 webpack-stats.json
 .idea
 kobo_playground/local_settings.py
+emails
