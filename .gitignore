@@ -18,3 +18,4 @@ tmp
 staticfiles
 .sass-cache
 webpack-stats.json
+.idea
