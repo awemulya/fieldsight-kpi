@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.gis.db.models import PointField
 from django.contrib.gis.db.models import GeoManager
 from django.db import models
@@ -124,3 +125,35 @@ class Site(models.Model):
     def __str__(self):
         return self.name
 
+
+class UserRole(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="%(class)s")
+    started_at = models.DateTimeField(default=datetime.now)
+    ended_at = models.DateTimeField(blank=True, null=True)
+
+    @staticmethod
+    def is_active(self, user):
+        pass
+
+    @staticmethod
+    def get_active_roles(self, user):
+        pass
+
+    class Meta:
+        abstract = True
+
+
+class SupervisorRole(UserRole):
+    site = models.ForeignKey(Site)
+
+
+class ManagerRole(UserRole):
+    project = models.ForeignKey(Project)
+
+
+class EngineerRole(UserRole):
+    project = models.ForeignKey(Project)
+
+
+class AdminRole(UserRole):
+    organization = models.ForeignKey(Organization)
