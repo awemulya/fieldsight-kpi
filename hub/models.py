@@ -1,11 +1,14 @@
 from datetime import datetime
+from django.contrib.auth.models import Group
 from django.contrib.gis.db.models import PointField
 from django.contrib.gis.db.models import GeoManager
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.conf import settings
 from markitup.fields import MarkupField
 from jsonfield import JSONField
+from django.utils.translation import ugettext_lazy as _
 
 
 class SitewideMessage(models.Model):
@@ -85,7 +88,7 @@ class Project(models.Model):
     email = models.EmailField(blank=True, null=True)
     fax = models.CharField(max_length=255, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    organization = models.ForeignKey(Organization)
+    organization = models.ForeignKey(Organization, related_name='projects')
 
     objects = GeoManager()
 
@@ -108,7 +111,7 @@ class Site(models.Model):
     address = models.TextField(blank=True, null=True)
     location = PointField(geography=True, srid=4326, blank=True, null=True)
     phone = models.CharField(max_length=255, blank=True, null=True)
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, related_name='sites')
 
     objects = GeoManager()
 
@@ -128,8 +131,28 @@ class Site(models.Model):
 
 class UserRole(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="%(class)s")
+    group = models.ForeignKey(Group)
     started_at = models.DateTimeField(default=datetime.now)
     ended_at = models.DateTimeField(blank=True, null=True)
+    site = models.ForeignKey(Site, null=True, blank=True, related_name='site_roles')
+    project = models.ForeignKey(Project, null=True, blank=True, related_name='project_roles')
+    organization = models.ForeignKey(Organization, null=True, blank=True, related_name='organization_roles')
+
+    def clean(self):
+        if self.group.name == 'Site Supervisor' and not self.site_id:
+            raise ValidationError({
+                'site': ValidationError(_('Missing site.'), code='required'),
+            })
+        # TODO @awemulya
+        # Check if site, project and organization are provided as required for the group
+        # E.g. site must be provided for Site Supervisor, else raise
+        # TODO @awemulya
+        # Auto fill-in project and organization from site for Site supervisor and so on.
+        # Maybe write in save()
+        # TODO @awemulya
+        # Remove unwanted existing fields
+        # e.g. remove site, project for organization admin
+        pass
 
     @staticmethod
     def is_active(self, user):
@@ -138,22 +161,3 @@ class UserRole(models.Model):
     @staticmethod
     def get_active_roles(self, user):
         pass
-
-    class Meta:
-        abstract = True
-
-
-class SupervisorRole(UserRole):
-    site = models.ForeignKey(Site)
-
-
-class ManagerRole(UserRole):
-    project = models.ForeignKey(Project)
-
-
-class EngineerRole(UserRole):
-    project = models.ForeignKey(Project)
-
-
-class AdminRole(UserRole):
-    organization = models.ForeignKey(Organization)
