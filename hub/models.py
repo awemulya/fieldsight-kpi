@@ -152,6 +152,8 @@ class UserRole(models.Model):
         # TODO @awemulya
         # Remove unwanted existing fields
         # e.g. remove site, project for organization admin
+        # TODO @awemulya
+        # Prevent multiple roles for same user for now (not in database level as the requirements are not clear as of now)
         pass
 
     @staticmethod
