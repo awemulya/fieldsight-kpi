@@ -15,6 +15,8 @@ from django.utils.http import is_safe_url
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.conf import settings
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.views.generic.list import ListView
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
@@ -37,11 +39,12 @@ from rest_framework.authtoken.models import Token
 
 from taggit.models import Tag
 
+from kpi.forms import OrganizationForm
 from .filters import KpiAssignedObjectPermissionsFilter
 from .filters import KpiObjectPermissionsFilter
 from .filters import SearchFilter
 from .highlighters import highlight_xform
-from hub.models import SitewideMessage
+from hub.models import SitewideMessage, Organization
 from .models import (
     Collection,
     Asset,
@@ -82,12 +85,20 @@ from .serializers import (
 from .utils.gravatar_url import gravatar_url
 from .utils.ss_structure_to_mdtable import ss_structure_to_mdtable
 from .tasks import import_in_background
+from .mixins import CreateView, UpdateView, DeleteView
 from deployment_backends.backends import DEPLOYMENT_BACKENDS
 
 
 CLONE_ARG_NAME = 'clone_from'
 ASSET_CLONE_FIELDS = {'name', 'content', 'asset_type'}
 COLLECTION_CLONE_FIELDS = {'name'}
+
+
+class LoginRequiredMixin(object):
+    @classmethod
+    def as_view(cls, **kwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**kwargs)
+        return login_required(view)
 
 
 @api_view(['GET'])
@@ -119,6 +130,30 @@ def current_user(request):
 @login_required
 def home(request):
     return TemplateResponse(request, "index.html")
+
+
+class OrganizationView(object):
+    model = Organization
+    success_url = reverse_lazy('organization-list')
+    form_class = OrganizationForm
+    
+    
+class OrganizationListView(LoginRequiredMixin, OrganizationView, ListView):
+    pass
+
+
+class OrganizationCreateView(LoginRequiredMixin, OrganizationView, CreateView):
+    pass
+
+
+class OrganizationUpdateView(LoginRequiredMixin, OrganizationView, UpdateView):
+    pass
+
+
+class OrganizationDeleteView(LoginRequiredMixin, OrganizationView, DeleteView):
+    pass
+
+
 
 
 class NoUpdateModelViewSet(

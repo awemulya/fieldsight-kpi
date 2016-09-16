@@ -2,6 +2,7 @@ from datetime import datetime
 from django.contrib.auth.models import Group
 from django.contrib.gis.db.models import PointField
 from django.contrib.gis.db.models import GeoManager
+from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
@@ -78,6 +79,9 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('organization-detail', kwargs={'pk': self.pk})
 
 
 class Project(models.Model):

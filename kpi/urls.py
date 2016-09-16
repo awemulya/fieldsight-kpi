@@ -17,6 +17,11 @@ from kpi.views import (
     AuthorizedApplicationUserViewSet,
     OneTimeAuthenticationKeyViewSet,
     UserCollectionSubscriptionViewSet,
+    OrganizationListView,
+    OrganizationCreateView,
+    OrganizationUpdateView,
+    OrganizationDeleteView
+
 )
 
 from kpi.views import current_user, home, one_time_login
@@ -51,6 +56,15 @@ js_info_dict = {
 urlpatterns = [
     url(r'^$', home, name='kpi-root'),
     url(r'^me/$', current_user, name='current-user'),
+    # group_required('superuser')(OrgView.as_view())
+    # dispatch or get_context_data to control only org admin or that orf can actions on its projects and sites.
+
+    url(r'^organization/$', OrganizationListView.as_view(), name='organization-list'),
+    url(r'^organization/add/$', OrganizationCreateView.as_view(), name='organization-add'),
+    url(r'^organization/(?P<pk>[0-9]+)/$', OrganizationUpdateView.as_view(), name='organization-edit'),
+    # url(r'^organization/search/$', organization_search, name='search-org'),
+    url(r'^organization/delete/(?P<pk>\d+)/$', OrganizationDeleteView.as_view(), name='organization-delete'),
+
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),

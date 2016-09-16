@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from registration import forms as registration_forms
 
+from hub.models import Organization
 from kobo_playground.static_lists import SECTORS, COUNTRIES
 
 USERNAME_REGEX = r'^[a-z][a-z0-9_]+$'
@@ -72,3 +73,9 @@ class RegistrationForm(registration_forms.RegistrationForm):
             # The 'password' field appears without adding it here; adding it
             # anyway results in a duplicate
         ]
+
+
+class OrganizationForm(forms.ModelForm):
+    class Meta:
+        model = Organization
+        exclude = []
