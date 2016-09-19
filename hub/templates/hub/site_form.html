@@ -1,0 +1,29 @@
+{% extends base_template %}
+{% load i18n %}
+
+{% block page-title %}{{ scenario }} {% trans 'Site' %}{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url 'site-list' %}">{% trans 'Sites' %}</a></li>
+    <li>{{ scenario }} {{ form.instance }}</li>
+{% endblock %}
+
+{% block content %}
+<li><a href="{% url 'site-list' %}">{% trans 'Sites' %}</a></li>
+    <form method="post" id='form'>
+        <div class="well">
+            {{ form.non_field_errors }}
+            {{ form.errors }}
+            {% csrf_token %}
+             {{ form.media }}
+            {{ form.as_p }}
+        </div>
+
+        <input type="submit" class='btn btn-info btn-raised' value="{% trans 'Save' %}">
+
+        {% if form.instance.id %}
+            <a href="{% url 'site-delete' form.instance.id %}" class="btn btn-danger btn-raised">{% trans 'Delete' %}</a>
+        {% endif %}
+    </form>
+
+{% endblock %}

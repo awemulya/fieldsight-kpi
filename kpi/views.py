@@ -39,12 +39,12 @@ from rest_framework.authtoken.models import Token
 
 from taggit.models import Tag
 
-from kpi.forms import OrganizationForm
+from kpi.forms import OrganizationForm, ProjectForm, SiteForm
 from .filters import KpiAssignedObjectPermissionsFilter
 from .filters import KpiObjectPermissionsFilter
 from .filters import SearchFilter
 from .highlighters import highlight_xform
-from hub.models import SitewideMessage, Organization
+from hub.models import SitewideMessage, Organization, Project, Site
 from .models import (
     Collection,
     Asset,
@@ -136,7 +136,19 @@ class OrganizationView(object):
     model = Organization
     success_url = reverse_lazy('organization-list')
     form_class = OrganizationForm
-    
+
+
+class ProjectView(object):
+    model = Project
+    success_url = reverse_lazy('project-list')
+    form_class = ProjectForm
+
+
+class SiteView(object):
+    model = Site
+    success_url = reverse_lazy('site-list')
+    form_class = SiteForm
+
     
 class OrganizationListView(LoginRequiredMixin, OrganizationView, ListView):
     pass
@@ -151,6 +163,38 @@ class OrganizationUpdateView(LoginRequiredMixin, OrganizationView, UpdateView):
 
 
 class OrganizationDeleteView(LoginRequiredMixin, OrganizationView, DeleteView):
+    pass
+
+
+class ProjectListView(LoginRequiredMixin, ProjectView, ListView):
+    pass
+
+
+class ProjectCreateView(LoginRequiredMixin, ProjectView, CreateView):
+    pass
+
+
+class ProjectUpdateView(LoginRequiredMixin, ProjectView, UpdateView):
+    pass
+
+
+class ProjectDeleteView(LoginRequiredMixin, ProjectView, DeleteView):
+    pass
+
+
+class SiteListView(LoginRequiredMixin, SiteView, ListView):
+    pass
+
+
+class SiteCreateView(LoginRequiredMixin, SiteView, CreateView):
+    pass
+
+
+class SiteUpdateView(LoginRequiredMixin, SiteView, UpdateView):
+    pass
+
+
+class SiteDeleteView(LoginRequiredMixin, SiteView, DeleteView):
     pass
 
 

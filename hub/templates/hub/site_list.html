@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n staticfiles %}
+{% load filters %}  
+
+{% block page-title %}{% trans 'Sites' %}{% endblock %}
+
+{% block head %}
+    <a class="btn btn-success btn-raised" href="{% url 'site-add' %}">{% trans 'New' %} {% trans 'Site' %}</a>
+{% endblock %}
+
+{% block content %}
+
+    {% load pagination_tags %}
+    {% load sorting_tags %}
+    {% load filters %}
+
+    <div class='well'>
+
+        {% autosort object_list as sorted_objects %}
+        {% autopaginate object_list 25 as paginated_objects %}
+
+        <table class="table table-striped">
+            <thead>
+            <th>{% anchor name _('Name') %}</th>
+            <th>{% anchor address _('Address') %}</th>
+            <th>{% anchor phone _('Phone') %}</th>
+            <th>{% anchor email _('Email') %}</th>
+            <th>{% anchor fax _('Fax') %}</th>
+            <th>{% anchor website _('Website') %}</th>
+            </thead>
+            <tbody>
+            {% for org in paginated_objects %}
+                <tr>
+                    <td>
+                        <a href="{% url 'site-edit' org.pk %}">{{ org.name }}</a>
+                    </td>
+                    <td>
+                        {{ org.address }}
+                    </td>
+                    <td>
+                        {{ org.phone }}
+                    </td>
+                    <td>
+                        {{ org.email }}
+                    </td>
+                    <td>
+                        {{ org.fax }}
+                    </td>
+                    <td>
+                        {{ org.website }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% paginate %}
+
+    </div>
+
+
+
+{% endblock %}

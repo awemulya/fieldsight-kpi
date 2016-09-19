@@ -20,7 +20,15 @@ from kpi.views import (
     OrganizationListView,
     OrganizationCreateView,
     OrganizationUpdateView,
-    OrganizationDeleteView
+    OrganizationDeleteView,
+    ProjectListView,
+    ProjectCreateView,
+    ProjectUpdateView,
+    ProjectDeleteView,
+    SiteListView,
+    SiteCreateView,
+    SiteUpdateView,
+    SiteDeleteView
 
 )
 
@@ -64,6 +72,18 @@ urlpatterns = [
     url(r'^organization/(?P<pk>[0-9]+)/$', OrganizationUpdateView.as_view(), name='organization-edit'),
     # url(r'^organization/search/$', organization_search, name='search-org'),
     url(r'^organization/delete/(?P<pk>\d+)/$', OrganizationDeleteView.as_view(), name='organization-delete'),
+
+    url(r'^project/$', ProjectListView.as_view(), name='project-list'),
+    url(r'^project/add/$', ProjectCreateView.as_view(), name='project-add'),
+    url(r'^project/(?P<pk>[0-9]+)/$', ProjectUpdateView.as_view(), name='project-edit'),
+    # url(r'^organization/search/$', organization_search, name='search-org'),
+    url(r'^project/delete/(?P<pk>\d+)/$', ProjectDeleteView.as_view(), name='project-delete'),
+
+    url(r'^site/$', SiteListView.as_view(), name='site-list'),
+    url(r'^site/add/$', SiteCreateView.as_view(), name='site-add'),
+    url(r'^site/(?P<pk>[0-9]+)/$', SiteUpdateView.as_view(), name='site-edit'),
+    # url(r'^organization/search/$', organization_search, name='search-org'),
+    url(r'^site/delete/(?P<pk>\d+)/$', SiteDeleteView.as_view(), name='site-delete'),
 
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls',
