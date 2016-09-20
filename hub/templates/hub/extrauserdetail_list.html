@@ -22,33 +22,37 @@
         <table class="table table-striped">
             <thead>
             <th>{% anchor user.username _('Username') %}</th>
-            <th>{% anchor address _('Address') %}</th>
-            <th>{% anchor phone _('Phone') %}</th>
-            <th>{% anchor email _('Email') %}</th>
-            <th>{% anchor fax _('Fax') %}</th>
-            <th>{% anchor website _('Website') %}</th>
+            <th>{% anchor user.get_full_name _('Fullname') %}</th>
+            <th>{% anchor user.first_name _('FirstName') %}</th>
+            <th>{% anchor user.last_name _('LastName') %}</th>
+            <th>{% anchor user.email _('Email') %}</th>
+            <th>{% anchor data _('Other Datas') %}</th>
             </thead>
             <tbody>
-            {% for org in paginated_objects %}
+            {% for userdetail in paginated_objects %}
                 <tr>
                     <td>
-                        <a href="#">{{ org.user.username }}</a>
+                        <a href="#">{{ userdetail.user.username }}</a>
                     </td>
                     <td>
-                        {{ org.address }}
+                        {{ userdetail.user.get_full_name }}
                     </td>
                     <td>
-                        {{ org.phone }}
+                        {{ userdetail.user.first_name }}
                     </td>
                     <td>
-                        {{ org.email }}
+                        {{ userdetail.user.last_name }}
                     </td>
                     <td>
-                        {{ org.fax }}
+                        {{ userdetail.user.email }}
                     </td>
+
                     <td>
-                        {{ org.website }}
+                    {% for key, value in userdetail.data.items %}
+                    {{ key }}: {{ value }}
+                    {% endfor %}
                     </td>
+
                 </tr>
             {% endfor %}
             </tbody>
