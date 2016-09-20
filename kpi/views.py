@@ -223,6 +223,8 @@ class CreateUserView(LoginRequiredMixin, UserDetailView, RegistrationView):
             extra_data = {k: form.cleaned_data[k] for k in extra_fields}
             new_user.extra_details.data.update(extra_data)
             new_user.extra_details.save()
+            new_user.is_active = True
+            new_user.save()
         return new_user
 
 

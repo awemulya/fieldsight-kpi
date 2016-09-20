@@ -26,6 +26,7 @@
             <th>{% anchor user.first_name _('FirstName') %}</th>
             <th>{% anchor user.last_name _('LastName') %}</th>
             <th>{% anchor user.email _('Email') %}</th>
+            <th>{% anchor user.is_active _('Active') %}</th>
             <th>{% anchor data _('Other Datas') %}</th>
             </thead>
             <tbody>
@@ -42,6 +43,9 @@
                     </td>
                     <td>
                         {{ userdetail.user.last_name }}
+                    </td>
+                    <td>
+                        {{ userdetail.user.is_active }}
                     </td>
                     <td>
                         {{ userdetail.user.email }}
