@@ -51,3 +51,5 @@ class ExtraDetailRegistrationView(RegistrationView):
             new_user.extra_details.data.update(extra_data)
             new_user.extra_details.save()
         return new_user
+
+

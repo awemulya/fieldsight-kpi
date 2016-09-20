@@ -28,9 +28,9 @@ from kpi.views import (
     SiteListView,
     SiteCreateView,
     SiteUpdateView,
-    SiteDeleteView
-
-)
+    SiteDeleteView,
+    CreateUserView,
+    UserListView)
 
 from kpi.views import current_user, home, one_time_login
 from kpi.views import authorized_application_authenticate_user
@@ -90,6 +90,9 @@ urlpatterns = [
                                namespace='rest_framework')),
     url(r'^accounts/register/$', ExtraDetailRegistrationView.as_view(
         form_class=RegistrationForm), name='registration_register'),
+    url(r'^accounts/create/$', CreateUserView.as_view(
+        form_class=RegistrationForm), name='user-create'),
+    url(r'^userlist/$', UserListView.as_view(), name='user-list'),
     url(r'^accounts/logout/', 'django.contrib.auth.views.logout',
         {'next_page': '/'}),
     url(r'^accounts/', include('registration.backends.default.urls')),

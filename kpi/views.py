@@ -20,6 +20,8 @@ from django.views.generic.list import ListView
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
+from registration.backends.default.views import RegistrationView
+from registration.forms import RegistrationForm
 
 from rest_framework import (
     viewsets,
@@ -44,7 +46,7 @@ from .filters import KpiAssignedObjectPermissionsFilter
 from .filters import KpiObjectPermissionsFilter
 from .filters import SearchFilter
 from .highlighters import highlight_xform
-from hub.models import SitewideMessage, Organization, Project, Site
+from hub.models import SitewideMessage, Organization, Project, Site, ExtraUserDetail
 from .models import (
     Collection,
     Asset,
@@ -149,6 +151,12 @@ class SiteView(object):
     success_url = reverse_lazy('site-list')
     form_class = SiteForm
 
+
+class UserDetailView(object):
+    model = ExtraUserDetail
+    success_url = reverse_lazy('user-list')
+    form_class = RegistrationForm
+
     
 class OrganizationListView(LoginRequiredMixin, OrganizationView, ListView):
     pass
@@ -198,6 +206,24 @@ class SiteDeleteView(LoginRequiredMixin, SiteView, DeleteView):
     pass
 
 
+class UserListView(LoginRequiredMixin, UserDetailView, ListView):
+    pass
+
+
+class CreateUserView(LoginRequiredMixin, UserDetailView, RegistrationView):
+    def register(self, request, form, *args, **kwargs):
+        ''' Save all the fields not included in the standard `RegistrationForm`
+        into the JSON `data` field of an `ExtraUserDetail` object '''
+        standard_fields = set(RegistrationForm().fields.keys())
+        extra_fields = set(form.fields.keys()).difference(standard_fields)
+        # Don't save the user unless we successfully store the extra data
+        with transaction.atomic():
+            new_user = super(CreateUserView, self).register(
+                request, form, *args, **kwargs)
+            extra_data = {k: form.cleaned_data[k] for k in extra_fields}
+            new_user.extra_details.data.update(extra_data)
+            new_user.extra_details.save()
+        return new_user
 
 
 class NoUpdateModelViewSet(

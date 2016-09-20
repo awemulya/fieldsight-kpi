@@ -12,7 +12,7 @@
       {{ form.as_p }}
       <input type="submit" value="Create Account" class="registration__action" />
       <div class="registration__footer">
-        or <a href="{% url 'auth_login' %}">login</a>
+       {% if not request.user %} or <a href="{% url 'auth_login' %}">login</a> {% endif %}
       </div>
     </div>
 
