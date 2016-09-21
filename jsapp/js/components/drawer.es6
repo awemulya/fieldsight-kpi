@@ -247,14 +247,14 @@ var Drawer = React.createClass({
             <nav className='k-drawer__icons'>
               <DrawerLink label={t('Projects')} linkto='forms' ki-icon='projects' />
               <DrawerLink label={t('Library')} linkto='library' ki-icon='library' />
+              <DrawerLink label={t('Organization')} href='organization' ki-icon='projects' />
               { stores.session.currentAccount ?
                   <DrawerLink label={t('Projects')} active='true' href={stores.session.currentAccount.projects_url} className="is-edge" ki-icon='globe' />
               : null }
               <div className="mdl-layout-spacer"></div>
 
               <div className='k-drawer__icons-bottom'>
-                <DrawerLink label={t('source')} href='https://github.com/kobotoolbox/' ki-icon='github' />
-                <DrawerLink label={t('help')} href='http://support.kobotoolbox.org/' ki-icon='help' />
+                <DrawerLink label={t('users')} href='bcss' ki-icon='help' />
               </div>
             </nav>
 
@@ -271,6 +271,7 @@ var Drawer = React.createClass({
                         <i className="k-icon-library" />
                       :
                         <i className="k-icon-projects" />
+                      
                       }
                       {
                         ('to' in item) ?
