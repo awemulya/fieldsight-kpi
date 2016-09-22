@@ -271,7 +271,7 @@ var Drawer = React.createClass({
                         <i className="k-icon-library" />
                       :
                         <i className="k-icon-projects" />
-                      
+
                       }
                       {
                         ('to' in item) ?
