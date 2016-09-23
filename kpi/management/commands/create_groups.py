@@ -6,7 +6,8 @@ class Command(BaseCommand):
     help = 'Create default groups'
 
     def handle(self, *args, **options):
-        group_list = ['Site', 'ProjectManager', 'Owner', 'SuperOwner', 'OrganizationManager']
+        group_list = ['Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Owner',
+                      'SuperOwner']
         for group in group_list:
             new_group, created = Group.objects.get_or_create(name=group)
             self.stdout.write('Successfully created group .. "%s"' % group)

@@ -157,7 +157,8 @@ class OrganizationView(OrganizationRequiredMixin):
 
 
 USURPERS = {
-    'Site': ['Site', 'ProjectManager', 'Owner', 'SuperOwner', 'OrganizationManager'],
+    'Site': ['Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Owner',
+             'SuperOwner'],
     'Project': ['ProjectManager', 'Owner', 'SuperOwner', 'OrganizationManager'],
     'Organization': ['Owner', 'SuperOwner', 'OrganizationManager'],
     'Owner': ['Owner', 'SuperOwner'],
