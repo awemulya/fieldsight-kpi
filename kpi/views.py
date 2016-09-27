@@ -134,6 +134,11 @@ def home(request):
     return TemplateResponse(request, "index.html")
 
 
+@login_required
+def dashboard(request):
+    return TemplateResponse(request, "bcss_dashboard.html")
+
+
 class OrganizationView(object):
     model = Organization
     success_url = reverse_lazy('organization-list')
