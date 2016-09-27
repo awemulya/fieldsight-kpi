@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from registration import forms as registration_forms
 
-from hub.models import Organization, Site, Project
+from hub.models import Organization, Site, Project, UserRole
 from kobo_playground.static_lists import SECTORS, COUNTRIES
 
 USERNAME_REGEX = r'^[a-z][a-z0-9_]+$'
@@ -90,4 +90,10 @@ class ProjectForm(forms.ModelForm):
 class SiteForm(forms.ModelForm):
     class Meta:
         model = Site
+        exclude = []
+
+
+class UserRoleForm(forms.ModelForm):
+    class Meta:
+        model = UserRole
         exclude = []

@@ -30,7 +30,9 @@ from kpi.views import (
     SiteUpdateView,
     SiteDeleteView,
     CreateUserView,
-    UserListView)
+    UserListView,
+    UserRoleListView,
+    UserRoleDeleteView)
 
 from kpi.views import current_user, home, one_time_login
 from kpi.views import authorized_application_authenticate_user
@@ -84,6 +86,9 @@ urlpatterns = [
     url(r'^site/(?P<pk>[0-9]+)/$', SiteUpdateView.as_view(), name='site-edit'),
     # url(r'^organization/search/$', organization_search, name='search-org'),
     url(r'^site/delete/(?P<pk>\d+)/$', SiteDeleteView.as_view(), name='site-delete'),
+
+    url(r'^userroles/$', UserRoleListView.as_view(), name='user-role-list'),
+    url(r'^userroles/delete/(?P<pk>\d+)/$', UserRoleDeleteView.as_view(), name='user-role-delete'),
 
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls',

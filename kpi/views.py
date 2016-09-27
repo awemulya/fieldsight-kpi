@@ -41,12 +41,12 @@ from rest_framework.authtoken.models import Token
 
 from taggit.models import Tag
 
-from kpi.forms import OrganizationForm, ProjectForm, SiteForm
+from kpi.forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm
 from .filters import KpiAssignedObjectPermissionsFilter
 from .filters import KpiObjectPermissionsFilter
 from .filters import SearchFilter
 from .highlighters import highlight_xform
-from hub.models import SitewideMessage, Organization, Project, Site, ExtraUserDetail
+from hub.models import SitewideMessage, Organization, Project, Site, ExtraUserDetail, UserRole
 from .models import (
     Collection,
     Asset,
@@ -157,6 +157,11 @@ class UserDetailView(object):
     success_url = reverse_lazy('user-list')
     form_class = RegistrationForm
 
+class UserRoleView(object):
+    model = UserRole
+    success_url = reverse_lazy('user-role-list')
+    form_class = UserRoleForm
+
     
 class OrganizationListView(LoginRequiredMixin, OrganizationView, ListView):
     pass
@@ -227,6 +232,13 @@ class CreateUserView(LoginRequiredMixin, UserDetailView, RegistrationView):
             new_user.save()
         return new_user
 
+
+class UserRoleListView(LoginRequiredMixin, UserRoleView, ListView):
+    pass
+
+
+class UserRoleDeleteView(LoginRequiredMixin, UserRoleView, DeleteView):
+    pass
 
 class NoUpdateModelViewSet(
     mixins.CreateModelMixin,
