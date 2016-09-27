@@ -1,3 +1,7 @@
+{% load staticfiles i18n filters %}
+{% kwacro page-title %}
+   
+{% endkwacro %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +26,12 @@
     <link rel="stylesheet" href="{% static 'css/clndr.css' %}">
     <link rel="stylesheet" href="{% static 'js/css3clock/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'js/morris-chart/morris.css' %}">
+    <!--dynamic table-->
+    <link href="{% static 'js/advanced-datatable/css/demo_page.css' %}" rel="stylesheet" />
+    <link href="{% static 'js/advanced-datatable/css/demo_table.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'js/data-tables/DT_bootstrap.css' %}" />
+
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style-responsive.css' %}">
     <!--clock css-->
@@ -409,6 +419,9 @@
 
                         
                         <span class="tools pull-right">
+                         {% block head %}
+                           
+                        {% endblock %}
                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                             <a href="javascript:;" class="fa fa-cog"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
@@ -463,7 +476,12 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/jquery.flot.growraf.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/dashboard.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.customSelect.min.js" ></script>
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/data-tables/DT_bootstrap.js"></script>
 <!--common script init for all pages-->
 <script type="text/javascript" src="{{ STATIC_URL }}js/scripts.js"></script>
+<!--dynamic table initialization -->
+<script src="{{ STATIC_URL }}js/dynamic_table_init.js"></script>
 </body>
 </html>

@@ -2,7 +2,60 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="registration__bg">
+
+<body class="login-body">
+
+    <div class="container">
+
+      <form method="post" class="form-signin" action=".">
+        <h2 class="form-signin-heading">sign in now</h2>
+        <div class="login-wrap">
+            <div class="user-login-info">
+                {% csrf_token %}
+              {{ form.non_field_errors }}
+
+                <p>{{ form.username.errors.as_text }}</p>
+                <input type="text" class="form-control" placeholder="User ID" name="username" autofocus>
+                
+                <p>{{ form.password.errors.as_text }}</p>
+
+
+
+                <input type="password" class="form-control" placeholder="Password" name="password">
+                
+                
+            </div>
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+                <span class="pull-right">
+                    <a href="{% url 'auth_password_reset' %}" class="registration__forgot"> Forgot Password?</a>
+
+                </span>
+            </label>
+            <button class="btn btn-lg btn-login btn-block registration__action" type="submit" value="Login" >Sign in</button>
+             <input type="hidden" name="next" value="{{ next }}" />
+            <div class="registration">
+                Don't have an account yet?
+                <a class="" href="{% url 'registration_register' %}">
+                    Create an account
+                </a>
+            </div>
+
+        </div>
+
+          
+      </form>
+
+    </div>
+
+
+
+    <!-- Placed js at the end of the document so the pages load faster -->
+
+   
+
+  
+<!-- <div class="registration__bg">
   <form method="post" action="." class="registration registration--login">
     <div class="registration--logo"><a href="/"><img src="{% static 'img/kobologo.svg' %}"/></a></div>
     {% csrf_token %}
@@ -17,8 +70,8 @@
     </div>
   </form>
 
-  <div class="registration__credit"><a href="https://flic.kr/p/9v4mC5" title="Muhkjar refugee camp" target="_blank">Photo</a> by UNAMID / <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank">by-nc-nd</a></div>
-</div>
+    
+</div> -->
 
 
 {% endblock %}

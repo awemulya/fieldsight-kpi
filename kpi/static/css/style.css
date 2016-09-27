@@ -59,18 +59,18 @@ a,a:hover,a:focus {
     -webkit-border-radius:5px;
 }
 .form-signin h2.form-signin-heading {
-    margin:0;
-    padding:35px 15px;
-    text-align:center;
-    background:#aec785;
-    border-radius:5px 5px 0 0;
-    -webkit-border-radius:5px 5px 0 0;
-    color:#fff;
-    font-size:18px;
-    text-transform:uppercase;
-    font-weight:300;
-    font-family:'Open Sans',sans-serif;
-    border-bottom:10px solid #a0b87e;
+    margin: 0;
+    padding: 35px 15px;
+    text-align: center;
+    background: #1FB5AC;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans',sans-serif;
+    border-bottom: 10px solid #25A79F;
 }
 .form-signin .checkbox {
     margin-bottom:14px;
@@ -113,7 +113,7 @@ a,a:hover,a:focus {
 .form-signin p {
     text-align:left;
     color:#b6b6b6;
-    font-size:16px;
+    color: red;
     font-weight:300;
 }
 .form-signin a,.form-signin a:hover {
@@ -5756,6 +5756,7 @@ right: -1px;
 
 
 /*--------------------------------------newly added css----------------------------------*/
+
 /*----------header and navigation csss-------------*/
 .brand h3 {
     margin-top: 6px;

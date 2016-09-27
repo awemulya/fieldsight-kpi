@@ -14,14 +14,40 @@
     {% load sorting_tags %}
     {% load filters %}
 
-    <div class='well'>
+
+
+
+    <div class='adv-table'>
+
+       <!--  <div class="row-fluid">
+            <div class="span6">
+                <div class="dataTables_length" id="dynamic-table_length">
+                    <label>
+                        <select aria-controls="dynamic-table" class="form-control" size="1" name="dynamic-table_length">
+                            <option selected="selected" value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select> 
+                        records per page
+                    </label>
+                </div>
+            </div>
+            <div class="span6">
+                <div id="dynamic-table_filter" class="dataTables_filter">
+                    <label>
+                        Search: <input aria-controls="dynamic-table" class="form-control" type="text">
+                    </label>
+                </div>
+            </div>
+        </div> -->
 
         {% autosort object_list as sorted_objects %}
         {% autopaginate object_list 25 as paginated_objects %}
 
-        <table class="table table-striped">
+        <table class="table table-striped" id="dynamic-table1">
             <thead>
-            <th>{% anchor name _('Name') %}</th>
+            <th>Name</th>
             <th>{% anchor address _('Address') %}</th>
             <th>{% anchor phone _('Phone') %}</th>
             <th>{% anchor email _('Email') %}</th>
@@ -53,6 +79,7 @@
             {% endfor %}
             </tbody>
         </table>
+  
 
         {% paginate %}
 

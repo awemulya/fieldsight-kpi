@@ -9,6 +9,7 @@
     {% render_bundle 'app' 'css' %}
 
 <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
+<link rel="stylesheet" href="{% static 'bs3/css/bootstrap.min.css' %}">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,6 +22,7 @@
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72-precomposed.png' %}">
 <link rel="apple-touch-icon-precomposed" href="{% static 'img/apple-touch-icon-precomposed.png' %}">
 <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% block head %}{% endblock %}
 </head>
 <body>
@@ -38,6 +40,49 @@
   ga('create', '{{google_analytics_token}}', 'auto');
   ga('send', 'pageview');
 </script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bs3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dcjqaccordion.2.7.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.nicescroll.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/skycons/skycons.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.scrollTo/jquery.scrollTo.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/calendar/clndr.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/calendar/moment-2.2.1.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/evnt.calendar.init.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/gauge/gauge.js"></script>
+<!--clock init-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/css3clock/js/css3clock.js"></script>
+<!--Easy Pie Chart-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/easypiechart/jquery.easypiechart.js"></script>
+<!--Sparkline Chart-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/sparkline/jquery.sparkline.js"></script>
+<!--Morris Chart-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/morris-chart/morris.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/morris-chart/raphael-min.js"></script>
+<!--jQuery Flot Chart-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/jquery.flot.tooltip.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/jquery.flot.pie.resize.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/jquery.flot.animator.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot-chart/jquery.flot.growraf.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/dashboard.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.customSelect.min.js" ></script>
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/data-tables/DT_bootstrap.js"></script>
+<!--common script init for all pages-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/scripts.js"></script>
+<!--dynamic table initialization -->
+<script src="{{ STATIC_URL }}js/dynamic_table_init.js"></script>
 {% endif %}
 </body>
 </html>
