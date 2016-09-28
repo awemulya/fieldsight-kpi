@@ -4,7 +4,7 @@
 {% block page-title %}{{ scenario }} {% trans 'Organization' %}{% endblock %}
 
 {% block head %}
-    <a href="{% url 'organization-list' %}">{% trans 'Organizations' %}</a>
+    <a class="btn btn-success btn-raised" href="{% url 'organization-list' %}">{% trans 'Organizations' %}</a>
 {% endblock %}
 <!-- {% block breadcrumbs %}
     <li><a href="{% url 'organization-list' %}">{% trans 'Organizations' %}</a></li>
@@ -13,53 +13,29 @@
 
 {% block content %}
 <!-- <li><a href="{% url 'organization-list' %}">{% trans 'Organizations' %}</a></li> -->
-    <div class="row">
-            <div class="col-lg-12">
-                    <section class="panel">
-                        
-                        <div class="panel-body">
-                            <div class="position-center">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
-                                        <input type="file" id="exampleInputFile">
-                                        <p class="help-block">Example block-level help text here.</p>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Check me out
-                                        </label>
-                                    </div>
-                                    <button type="submit" class="btn btn-info">Submit</button>
-                                </form>
-                            </div>
-
-                        </div>
-                    </section>
-
-            </div>
-            
-    </div>
-
+    
     <form method="post" id='form'>
         <div class="">
-            {{ form.non_field_errors }}
-            {{ form.errors }}
+            <div class="col-sm-12 registration_field">
+               {{ form.non_field_errors }}
+               </div>
+            
             {% csrf_token %}
              {{ form.media }}
-            {{ form.as_p }}
+            {% for field in form %}
+               <div class="col-sm-12 registration_field">
+               {{ form.non_field_errors }}
+               </div>
+               <div class="col-sm-12 registration_field">
+                 <div class="col-sm-3"> {{ field.label }}</div>
+                 <div class="col-sm-3">      {{ field }}</div>
+                 <div class="col-sm-6">      {{ field.errors }}</div>
+               </div>
+            {% endfor %}
         </div>
-
-        <input type="submit" class='btn btn-info btn-raised' value="{% trans 'Save' %}">
-
+        
+        <!-- <input type="submit" class='btn btn-info btn-raised' value="{% trans 'Save' %}"> -->
+        <button class="btn btn-lg btn-primary registration__action" type="submit" >{% trans 'Save' %}</button>
         {% if form.instance.id %}
             <a href="{% url 'organization-delete' form.instance.id %}" class="btn btn-danger btn-raised">{% trans 'Delete' %}</a>
         {% endif %}

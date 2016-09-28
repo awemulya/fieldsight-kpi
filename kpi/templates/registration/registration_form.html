@@ -1,8 +1,12 @@
 {% extends "bcss_base.html" %}
+{% load i18n %}
 {%block extracss %}
 {% load staticfiles %}
 
   <link rel="stylesheet" href="{% static 'css/site.css' %}" />
+{% endblock %}
+{% block head %}
+    <a class="btn btn-success btn-raised" href="{% url 'user-list' %}">{% trans 'list' %} {% trans 'User' %}</a>
 {% endblock %}
 {% block content %}
 <div class="registration__bg">
@@ -10,10 +14,17 @@
   <form action="." method="post" class=" registration--register">
     
 
-    <div class="registration__first-half">
+    <div class="">
       {% csrf_token%}
-      {{ form.as_p }}
-      <input type="submit" value="Create Account" class="registration__action" />
+      {% for field in form %}
+       <div class="col-sm-12 registration_field">
+         <div class="col-sm-3"> {{ field.label }}</div>
+         <div class="col-sm-3">      {{ field }}</div>
+         <div class="col-sm-6">      {{ field.errors }}</div>
+       </div>
+     {% endfor %}
+      <!-- <input type="submit" value="Create Account" class="registration__action" /> -->
+      <button class="btn btn-lg btn-primary registration__action" type="submit" value="Create Account" >{% trans 'Create Account'%}</button>
       <div class="registration__footer">
        {% if not request.user %} or <a href="{% url 'auth_login' %}">login</a> {% endif %}
       </div>
@@ -30,8 +41,7 @@
     <div style="clear:both;"></div>
   </form>
 
-  <div class="registration__credit"><a href="https://flic.kr/p/9v4mC5" title="Muhkjar refugee camp" target="_blank">Photo</a> by UNAMID / <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" target="_blank">by-nc-nd</a></div>
-</div>
+ 
 
 <script>
   $(function () {
