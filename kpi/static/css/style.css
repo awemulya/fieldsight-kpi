@@ -141,7 +141,7 @@ a,a:hover,a:focus {
     color: #b8bab9;
 }
 /*sidebar navigation*/
-#sidebar {
+/*#sidebar {
     width:240px;
     height:100%;
     position:fixed;
@@ -150,6 +150,16 @@ a,a:hover,a:focus {
     -moz-transition:all .3s ease-in-out;
     -o-transition:all .3s ease-in-out;
     transition:all .3s ease-in-out;
+}*/
+#sidebar {
+    width: 240px;
+    height: 100%;
+    position: fixed;
+    background: #d8d9de;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 #sidebar ul li {
     position: relative;
@@ -262,7 +272,7 @@ ul.sidebar-menu ul.sub li {
 ul.sidebar-menu li a span {
     display:inline-block;
 }
-ul.sidebar-menu li a {
+/*ul.sidebar-menu li a {
     color:#aeb2b7;
     text-decoration:none;
     display:block;
@@ -274,8 +284,21 @@ ul.sidebar-menu li a {
     -o-transition:all 0.3s ease;
     -ms-transition:all 0.3s ease;
     transition:all 0.3s ease;
+}*/
+ul.sidebar-menu li a {
+    color: #000;
+    text-decoration: none;
+    display: block;
+    padding: 18px 0 18px 25px;
+    font-size: 12px;
+    outline: none;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
-ul.sidebar-menu li a.active,ul.sidebar-menu li a:hover,ul.sidebar-menu li a:focus {
+/*ul.sidebar-menu li a.active,ul.sidebar-menu li a:hover,ul.sidebar-menu li a:focus {
     background:#28282e;
     color:#1FB5AD;
     display:block;
@@ -284,16 +307,32 @@ ul.sidebar-menu li a.active,ul.sidebar-menu li a:hover,ul.sidebar-menu li a:focu
     -o-transition:all 0.3s ease;
     -ms-transition:all 0.3s ease;
     transition:all 0.3s ease;
+}*/
+ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
+    background: #a8a9ac;
+    display: block;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    color: #296fd5;
 }
 ul.sidebar-menu li a i {
     font-size:15px;
     padding-right:6px;
 }
+/*ul.sidebar-menu li a:hover i,ul.sidebar-menu li a:focus i {
+    color:#1fb5ad;
+}*/
 ul.sidebar-menu li a:hover i,ul.sidebar-menu li a:focus i {
-    color:#1fb5ad;
+    color: #296fd5;
 }
-ul.sidebar-menu li a.active i {
+/*ul.sidebar-menu li a.active i {
     color:#1fb5ad;
+}*/
+ul.sidebar-menu li a.active i {
+    color: #296fd5;
 }
 .mail-info,.mail-info:hover {
     margin:-3px 6px 0 0;
@@ -335,8 +374,15 @@ ul.sidebar-menu li a.active i {
     width:100%;
 
 }
-.brand {
+/*.brand {
     background:#1fb5ad;
+    float:left;
+    width:240px;
+    height:80px;
+    position:relative;
+}*/
+.brand {
+    background:#296fd5;
     float:left;
     width:240px;
     height:80px;
@@ -692,7 +738,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     width:100% !important;
 }
 /*--sidebar toggle---*/
-.sidebar-toggle-box {
+/*.sidebar-toggle-box {
     float:left;
     margin-top:23px;
     margin-left:-15px;
@@ -703,17 +749,41 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     height:32px;
     position:absolute;
     right:-15px;
+}*/
+.sidebar-toggle-box {
+    float: left;
+    margin-top: 23px;
+    margin-left: -15px;
+    background: #237dff;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: -15px;
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2);
 }
-.sidebar-toggle-box .fa-bars {
+/*.sidebar-toggle-box .fa-bars {
     cursor:pointer;
     display:inline-block;
     font-size:15px;
     padding:8px 8px 8px 9px;
     color:rgba(0,0,0,.3);
+}*/
+.sidebar-toggle-box .fa-bars {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    padding: 8px 8px 8px 9px;
+    color: #296fd5;
 }
 .sidebar-toggle-box:hover {
-    background:#F6F6F6;
+    color:#296fd5;
+    background:#fff;
 }
+
 .hide-left-bar {
     margin-left:-240px !important;
     -webkit-transition:all .3s ease-in-out;
