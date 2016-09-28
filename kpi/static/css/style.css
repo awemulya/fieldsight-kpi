@@ -5768,3 +5768,11 @@ right: -1px;
 
 
 /*----------header and navigation csss-------------*/
+/*----------login page csss-------------*/
+ul.errorlist.nonfield {
+    padding-left: 0px;
+    list-style: none;
+    color: red;
+    font-size: 10px;
+}
+/*----------login page csss-------------*/
