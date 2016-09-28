@@ -16,7 +16,7 @@
     <meta http-equiv=”X-UA-Compatible” content=”IE=9”>
 
     <link rel="shortcut icon" href="images/favicon.png">
-    <title>BCSS</title>
+    <title>{% block title %} BCSS {% endblock %}</title>
     <!--Core CSS -->
     <link rel="stylesheet" href="{% static 'bs3/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'js/jquery-ui/jquery-ui-1.10.1.custom.min.css' %}">
@@ -31,7 +31,7 @@
     <link href="{% static 'js/advanced-datatable/css/demo_table.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'js/data-tables/DT_bootstrap.css' %}" />
 
-     {%block extracss %}
+    {%block extracss %}
     {% endblock %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style-responsive.css' %}">
@@ -254,7 +254,7 @@
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img src="{{STATIC_URL}}images/avatar1_small.jpg" / >
-                <span class="username">John Doe</span>
+                <span class="username"> {% trans request.user.username %}</span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
@@ -281,47 +281,70 @@
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a class="active" href="?pg=home">
+                    <a class="active" href="{% url 'dashboard' %}">
                         <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
+                        <span>{% trans 'Dashboard' %}</span>
                     </a>
                 </li>
+               
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-laptop"></i>
-                        <span>Project</span>
+                        <i class="fa fa-user"></i>
+                        <span>{% trans 'Users' %}</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="?pg=add_project">Add</a></li>
-                        <li><a href="?pg=list_project">View</a></li>
-                        <!-- <li><a href="language_switch.html">Language Switch Bar</a></li> -->
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-book"></i>
-                        <span>User</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="?pg=add_user">Add User</a></li>
-                        <li><a href="?pg=list_user">View User</a></li>
+                        <li><a href="{% url 'user-list' %}">{% trans 'Users' %}</a></li>
+                        <li><a href="{% url 'user-create' %}">{% trans 'Add User' %}</a></li>
                         
                     </ul>
                 </li>
                 
-                <li class="sub-menu">
+                   <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-th"></i>
-                        <span>Organization</span>
+                        <i class="fa fa-users"></i>
+                        <span>{% trans 'Users Roles' %}</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="?pg=add_organization">Add Organization</a></li>
-                        <li><a href="?pg=list_organization">View Organization</a></li>
+                        <li><a href="{% url 'user-list' %}">{% trans 'Users Roles' %}</a></li>
+                        <li><a href="{% url 'user-create' %}">{% trans 'Add Roles' %}</a></li>
                         
                     </ul>
                 </li>
                 
-                
+                 <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-building-o"></i>
+                        <span>{% trans 'Organization' %}</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'organization-list' %}">{% trans 'Organization' %}</a></li>
+                        <li><a href="{% url 'organization-add' %}">{% trans 'Add Organization' %}</a></li>
+                        
+                    </ul>
+                </li>
+
+               <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-building-o"></i>
+                        <span>{% trans 'Projects' %}</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'project-list' %}">{% trans 'Projects' %}</a></li>
+                        <li><a href="{% url 'project-add' %}">{% trans 'Add Project' %}</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-picture-o"></i>
+                        <span>{% trans 'Sites' %}</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'site-list' %}">{% trans 'Site' %}</a></li>
+                        <li><a href="{% url 'site-add' %}">{% trans 'Add Site' %}</a></li>
+                        
+                    </ul>
+                </li>
                 
                 <li class="sub-menu">
                     <a href="javascript:;">
@@ -333,15 +356,11 @@
                         <li><a href="vector_map.html">Vector Map</a></li>
                     </ul>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Form</span>
+                <li>
+                    <a class="active" href="{% url 'kpi-root' %}">
+                        <i class="fa fa-wpforms"></i>
+                        <span>{% trans 'My Forms' %}</span>
                     </a>
-                    <ul class="sub">
-                        <li><a href="google_map.html">My Forms</a></li>
-                        <li><a href="vector_map.html">Deployed Forms</a></li>
-                    </ul>
                 </li>
                 
                 
