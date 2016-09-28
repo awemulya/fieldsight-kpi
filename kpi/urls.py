@@ -99,7 +99,7 @@ urlpatterns = [
         form_class=RegistrationForm), name='user-create'),
     url(r'^userlist/$', UserListView.as_view(), name='user-list'),
     url(r'^accounts/logout/', 'django.contrib.auth.views.logout',
-        {'next_page': '/'}),
+        {'next_page': '/dashboard'}),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(
