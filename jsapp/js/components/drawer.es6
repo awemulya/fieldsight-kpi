@@ -247,18 +247,13 @@ var Drawer = React.createClass({
             <nav className='k-drawer__icons'>
               <DrawerLink label={t('Forms')} linkto='forms' ki-icon='projects' />
               <DrawerLink label={t('Form Library')} linkto='library' ki-icon='library' />
-              <DrawerLink label={t('Users')} href='userlist' ki-icon='fa fa-users' />
-              <DrawerLink label={t('Organizations')} href='organization' ki-icon='fa fa-share' />
-              <DrawerLink label={t('Projects')} href='project' ki-icon='projects' />
-              <DrawerLink label={t('Sites')} href='site' ki-icon='fa fa-building' />
+              <DrawerLink label={t('Dashboard')} href='dashboard' ki-icon='projects' />
               { stores.session.currentAccount ?
                   <DrawerLink label={t('Deployed Forms')} active='true' href={stores.session.currentAccount.projects_url} className="is-edge" ki-icon='globe' />
               : null }
               <div className="mdl-layout-spacer"></div>
 
-              <div className='k-drawer__icons-bottom'>
-                <DrawerLink label={t('users')} href='userlist' ki-icon='library' />
-              </div>
+           
             </nav>
 
             <div className="drawer__sidebar">
