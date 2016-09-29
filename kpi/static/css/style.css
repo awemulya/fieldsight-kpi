@@ -267,7 +267,7 @@ ul.sidebar-menu li ul.sub li a {
     transition: all 0.3s ease;
     color: #000;
 }
-ul.sidebar-menu li ul.sub li a:hover,ul.sidebar-menu li ul.sub li.active a {
+/*ul.sidebar-menu li ul.sub li a:hover,ul.sidebar-menu li ul.sub li.active a {
     color:#1fb5ad;
     -webkit-transition:all 0.3s ease;
     -moz-transition:all 0.3s ease;
@@ -276,6 +276,16 @@ ul.sidebar-menu li ul.sub li a:hover,ul.sidebar-menu li ul.sub li.active a {
     transition:all 0.3s ease;
     display:block;
     background:#202025;
+}*/
+ul.sidebar-menu li ul.sub li a:hover,ul.sidebar-menu li ul.sub li.active a {
+    color:#296fd5;
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    -ms-transition:all 0.3s ease;
+    transition:all 0.3s ease;
+    display:block;
+    background:#a8a9ac;
 }
 ul.sidebar-menu li {
     border-bottom:1px solid rgba(255,255,255,0.05);
