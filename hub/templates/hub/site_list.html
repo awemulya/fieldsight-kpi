@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "bcss_base.html" %}
 {% load i18n staticfiles %}
 {% load filters %}  
 
@@ -14,12 +14,12 @@
     {% load sorting_tags %}
     {% load filters %}
 
-    <div class='well'>
+    <div class='adv-table'>
 
         {% autosort object_list as sorted_objects %}
         {% autopaginate object_list 25 as paginated_objects %}
 
-        <table class="table table-striped">
+        <table class="table table-striped" id="dynamic-table1">
             <thead>
             <th>{% anchor name _('Name') %}</th>
             <th>{% anchor address _('Address') %}</th>
