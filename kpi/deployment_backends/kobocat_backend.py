@@ -49,7 +49,7 @@ class KobocatDeploymentBackend(BaseDeploymentBackend):
         or know the full format of KC identifiers '''
         # No need to use the internal URL here; it will be substituted in when
         # appropriate
-        return u'{}/{}/forms/{}'.format(
+        return u'{}/{}/assign/{}'.format(
             settings.KOBOCAT_URL,
             username,
             id_string

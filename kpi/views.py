@@ -657,6 +657,13 @@ class AssetSnapshotViewSet(NoUpdateModelViewSet):
             return Response(response_data, template_name='preview_error.html')
 
 
+def change_redirect_to_form_assign(data):
+    identifier = data.get('identifier','')
+    if identifier:
+        data['identifier'] = identifier.replace('forms', 'assign')
+    return data
+
+
 class AssetViewSet(viewsets.ModelViewSet):
     """
     * Assign a asset to a collection <span class='label label-warning'>partially implemented</span>
@@ -812,7 +819,6 @@ class AssetViewSet(viewsets.ModelViewSet):
                     'cannot retrieve asset backend: "{}"'.format(backend_name))
             request.data['identifier'] = backend.make_identifier(
                 request.user.username, id_string)
-
         if request.method == 'GET':
             if not asset.has_deployment:
                 raise Http404
@@ -821,7 +827,8 @@ class AssetViewSet(viewsets.ModelViewSet):
                     asset.deployment, context=self.get_serializer_context())
                 # TODO: Understand why this 404s when `serializer.data` is not
                 # coerced to a dict
-                return Response(dict(serializer.data))
+                new_data = change_redirect_to_form_assign(dict(serializer.data))
+                return Response(new_data)
         elif request.method == 'POST':
             if asset.has_deployment:
                 raise exceptions.MethodNotAllowed(
@@ -836,7 +843,8 @@ class AssetViewSet(viewsets.ModelViewSet):
             serializer.save()
             # TODO: Understand why this 404s when `serializer.data` is not
             # coerced to a dict
-            return Response(dict(serializer.data))
+            new_data = change_redirect_to_form_assign(dict(serializer.data))
+            return Response(new_data)
         elif request.method == 'PATCH':
             if not asset.has_deployment:
                 raise exceptions.MethodNotAllowed(
@@ -853,7 +861,8 @@ class AssetViewSet(viewsets.ModelViewSet):
             serializer.save()
             # TODO: Understand why this 404s when `serializer.data` is not
             # coerced to a dict
-            return Response(dict(serializer.data))
+            new_data = change_redirect_to_form_assign(dict(serializer.data))
+            return Response(new_data)
 
     def perform_create(self, serializer):
         # Check if the user is anonymous. The
