@@ -815,7 +815,7 @@ var App = React.createClass({
   },
   render() {
     return (
-      <DocumentTitle title="KoBoToolbox">
+      <DocumentTitle title="Field Sight">
         <div className="mdl-wrapper">
           { !this.state.formBuilderFocus && 
             <div className="k-header__bar"></div>
