@@ -36,13 +36,12 @@
                     <td>
                         {{ userdetail.user.get_full_name }}
                     </td>
+                      <td>
+                        {{ userdetail.user.email }}
+                    </td>
                     <td>
                         {{ userdetail.user.is_active }}
                     </td>
-                    <td>
-                        {{ userdetail.user.email }}
-                    </td>
-
                     <td>
                     {% for key, value in userdetail.data.items %}
                     {{ key }}: {{ value }}
