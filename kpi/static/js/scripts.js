@@ -1,9 +1,4 @@
-(function ($) {
-    "use strict";
-    $(document).ready(function () {
-        /*==Left Navigation Accordion ==*/
-        if ($.fn.dcAccordion) {
-            $('#nav-accordion').dcAccordion({
+$('#nav-accordion').dcAccordion({
                 eventType: 'click',
                 autoClose: true,
                 saveState: true,
@@ -13,7 +8,11 @@
                 autoExpand: true,
                 classExpand: 'dcjq-current-parent'
             });
-        }
+(function ($) {
+    "use strict";
+    $(document).ready(function () {
+        /*==Left Navigation Accordion ==*/
+        
         /*==Slim Scroll ==*/
         if ($.fn.slimScroll) {
             $('.event-list').slimscroll({
