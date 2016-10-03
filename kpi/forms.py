@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext_lazy as _
 from registration import forms as registration_forms
 
@@ -76,6 +77,10 @@ class RegistrationForm(registration_forms.RegistrationForm):
 
 
 class OrganizationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(OrganizationForm, self).__init__(*args, **kwargs)
+        if not self.fields['location'].initial:
+            self.fields['location'].initial = Point(85.3240,27.7172,10,srid=4326)
     class Meta:
         model = Organization
         exclude = []

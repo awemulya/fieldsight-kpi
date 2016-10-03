@@ -87,6 +87,7 @@ class Organization(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=255)
     address = models.TextField(blank=True, null=True)
+    # location = PointField(geography=True, srid=4326, blank=True, null=True,default='SRID=3857;POINT(85.3240 27.7172)')
     location = PointField(geography=True, srid=4326, blank=True, null=True)
     phone = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
