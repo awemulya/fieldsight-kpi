@@ -5905,3 +5905,43 @@ ul.errorlist.nonfield {
 }
 /*----------below map page csss-------------*/
 
+
+/*--------------------------------------newly added css----------------------------------*/
+
+/*----------header and navigation csss-------------*/
+.brand h3 {
+    margin-top: 6px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+
+
+/*----------header and navigation csss-------------*/
+/*----------login page csss-------------*/
+ul.errorlist.nonfield {
+    padding-left: 0px;
+    list-style: none;
+    color: red;
+    font-size: 10px;
+}
+.login-heading-with-image {
+    background: #296fd5;
+    text-align: center;
+    padding: 35px 15px 35px 25px;
+    border-bottom: 10px solid #2056A5;
+    -webkit-border-radius: 5px 5px 0 0;
+}
+.form-signin a, .form-signin a:hover {
+    color: #296FD5;
+}
+.form-signin .btn-login {
+    background: #296FD5;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Open Sans',sans-serif;
+    margin: 20px 0 5px;
+}
+/*----------login page csss-------------*/
