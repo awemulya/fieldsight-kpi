@@ -8,7 +8,10 @@
     <div class="container">
 
       <form method="post" class="form-signin" action=".">
-        <h2 class="form-signin-heading">sign in now</h2>
+        <div class="login-heading-with-image">
+          <img class="form-signin-heading-img" src="{{STATIC_URL}}images/logo1.png" / >
+          <!-- <h2 class="form-signin-heading">sign in now</h2> -->
+        </div>
         <div class="login-wrap">
             <div class="user-login-info">
                 {% csrf_token %}
