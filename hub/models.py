@@ -65,6 +65,9 @@ class Organization(models.Model):
     fax = models.CharField(max_length=255, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
 
+    def __unicode__(self):
+        return u'{}'.format(self.name)
+
     objects = GeoManager()
 
     @property
@@ -135,7 +138,7 @@ class Site(models.Model):
 
 
 class UserRole(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="%(class)s")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_roles")
     group = models.ForeignKey(Group)
     started_at = models.DateTimeField(default=datetime.now)
     ended_at = models.DateTimeField(blank=True, null=True)
@@ -143,10 +146,29 @@ class UserRole(models.Model):
     project = models.ForeignKey(Project, null=True, blank=True, related_name='project_roles')
     organization = models.ForeignKey(Organization, null=True, blank=True, related_name='organization_roles')
 
+    def __unicode__(self):
+        return 'user: {}\'s role : {}'.format(self.user.__unicode__(), self.group.__unicode__())
+
+    class Meta:
+        unique_together = ('user', 'group', 'organization', 'project','site')
+
     def clean(self):
+        if self.group.name == 'Super Admin':
+            # no org proj needed
+            pass
         if self.group.name == 'Site Supervisor' and not self.site_id:
             raise ValidationError({
                 'site': ValidationError(_('Missing site.'), code='required'),
+            })
+
+        if self.group.name == 'Project Manager' and not self.project_id:
+            raise ValidationError({
+                'project': ValidationError(_('Missing Project.'), code='required'),
+            })
+
+        if self.group.name == 'Organization Admin' and not self.organization_id:
+            raise ValidationError({
+                'organization': ValidationError(_('Missing Organization.'), code='required'),
             })
         # TODO @awemulya
         # Check if site, project and organization are provided as required for the group
@@ -162,9 +184,9 @@ class UserRole(models.Model):
         pass
 
     @staticmethod
-    def is_active(self, user):
-        pass
+    def is_active(user):
+        return user.classes.ended_at is None
 
     @staticmethod
-    def get_active_roles(self, user):
-        pass
+    def get_active_roles(user):
+        return user.user_roles.all()
