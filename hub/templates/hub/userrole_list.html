@@ -32,11 +32,14 @@
             <tbody>
             {% for org in paginated_objects %}
                 <tr>
+
                     <td>
-                        <a href="{% url 'organization-edit' org.pk %}">{{ org.name }}</a>
-                    </td>
-                    <td>
-                        {{ org.user.username }}
+                        {% ifrole "admin" %}
+                       <a href="{% url 'user-role-edit' org.pk %}"> {% endrole %}{{ org.user.username }}
+                        {% ifrole "admin" %}
+                       </a>
+                         {% endrole %}
+
                     </td>
                     <td>
                         {{ org.group.name }}

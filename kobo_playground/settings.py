@@ -55,11 +55,11 @@ INSTALLED_APPS = (
     'cachebuster',
     'django.contrib.staticfiles',
     'reversion',
-    'debug_toolbar',
     'mptt',
     'haystack',
     'kpi.apps.KpiConfig',
     'hub',
+    'users',
     'webpack_loader',
     'registration', # Must come AFTER kpi
     'django.contrib.admin', # Must come AFTER registration
@@ -69,6 +69,9 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'oauth2_provider',
     'markitup',
+    'django.contrib.gis',
+    'linaro_django_pagination',
+    'webstack_django_sorting',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,6 +86,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'hub.middleware.OtherFormBuilderRedirectMiddleware',
+    'linaro_django_pagination.middleware.PaginationMiddleware',
+    'webstack_django_sorting.middleware.SortingMiddleware',
+    'users.middleware.RoleMiddleware',
 )
 
 # used in kpi.models.sitewide_messages
@@ -196,6 +202,10 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'kpi.context_processors.email',
     'kpi.context_processors.git_commit',
     'kpi.context_processors.sitewide_messages',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
 )
 
 # This is very brittle (can't handle references to missing images in CSS);

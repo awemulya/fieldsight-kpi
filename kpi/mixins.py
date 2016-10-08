@@ -32,7 +32,7 @@ class LoginRequiredMixin(object):
 
 class OrganizationRequiredMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
-        if not request.company:
+        if not request.organization:
             raise PermissionDenied()
         if hasattr(self, 'check'):
             if not getattr(request.organization, self.check)():
@@ -42,12 +42,22 @@ class OrganizationRequiredMixin(LoginRequiredMixin):
 
 class ProjectRequiredMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
-        if not request.company:
+        if not request.project:
             raise PermissionDenied()
         if hasattr(self, 'check'):
             if not getattr(request.project, self.check)():
                 raise PermissionDenied()
         return super(ProjectRequiredMixin, self).dispatch(request, *args, **kwargs)
+
+
+class SiteRequiredMixin(LoginRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.site:
+            raise PermissionDenied()
+        if hasattr(self, 'check'):
+            if not getattr(request.project, self.check)():
+                raise PermissionDenied()
+        return super(SiteRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
 class UpdateView(BaseUpdateView):
@@ -141,28 +151,26 @@ class TableObject(object):
 
 class OrganizationView(OrganizationRequiredMixin):
     def form_valid(self, form):
-        form.instance.company = self.request.company
+        form.instance.organization = self.request.organization
         return super(OrganizationView, self).form_valid(form)
 
     def get_queryset(self):
-        return super(OrganizationView, self).get_queryset().filter(company=self.request.company)
+        return super(OrganizationView, self).get_queryset().filter(organization=self.request.organization)
 
     def get_form(self, *args, **kwargs):
         form = super(OrganizationView, self).get_form(*args, **kwargs)
-        form.company = self.request.organization
+        form.organization = self.request.organization
         if hasattr(form.Meta, 'organization_filters'):
-            for field in form.Meta.company_filters:
-                form.fields[field].queryset = form.fields[field].queryset.filter(company=form.company)
+            for field in form.Meta.organization_filters:
+                form.fields[field].queryset = form.fields[field].queryset.filter(organization=form.organization)
         return form
 
 
 USURPERS = {
-    'Site': ['Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Owner',
-             'SuperOwner'],
-    'Project': ['ProjectManager', 'Owner', 'SuperOwner', 'OrganizationManager'],
-    'Organization': ['Owner', 'SuperOwner', 'OrganizationManager'],
-    'Owner': ['Owner', 'SuperOwner'],
-    'SuperOwner': ['SuperOwner'],
+    'Site': ['Super Admin', 'Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Data Entry'],
+    'Project': ['Super Admin', 'Organization Admin', 'Project Manager'],
+    'Organization': ['Super Admin', 'Organization Admin'],
+    'admin': ['Super Admin'],
 }
 
 
@@ -182,6 +190,7 @@ class ProjectMixin(object):
         raise PermissionDenied()
 
 
+#use in view class
 class OrganizationMixin(object):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
@@ -190,22 +199,15 @@ class OrganizationMixin(object):
         raise PermissionDenied()
 
 
-class OwnerMixin(object):
+class SuperAdminMixin(object):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            if request.role.group.name in USURPERS['Owner']:
-                return super(OwnerMixin, self).dispatch(request, *args, **kwargs)
+            if request.role.group.name in USURPERS['admin']:
+                return super(SuperAdminMixin, self).dispatch(request, *args, **kwargs)
         raise PermissionDenied()
 
 
-class SuperOwnerMixin(object):
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            if request.role.group.name in USURPERS['SuperOwner']:
-                return super(SuperOwnerMixin, self).dispatch(request, *args, **kwargs)
-        raise PermissionDenied()
-
-
+# use in all view functions
 def group_required(group_name):
     def _check_group(view_func):
         @wraps(view_func)

@@ -184,8 +184,8 @@ class UserRole(models.Model):
         pass
 
     @staticmethod
-    def is_active(user):
-        return user.classes.ended_at is None
+    def is_active(user,group):
+        return user.user_roles.filter(group=group)[0].ended_at is None
 
     @staticmethod
     def get_active_roles(user):

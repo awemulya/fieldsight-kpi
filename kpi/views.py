@@ -42,6 +42,7 @@ from rest_framework.authtoken.models import Token
 from taggit.models import Tag
 
 from kpi.forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm
+from kpi.mixins import LoginRequiredMixin, OrganizationMixin, SuperAdminMixin, ProjectMixin, SiteMixin
 from .filters import KpiAssignedObjectPermissionsFilter
 from .filters import KpiObjectPermissionsFilter
 from .filters import SearchFilter
@@ -94,14 +95,6 @@ from deployment_backends.backends import DEPLOYMENT_BACKENDS
 CLONE_ARG_NAME = 'clone_from'
 ASSET_CLONE_FIELDS = {'name', 'content', 'asset_type'}
 COLLECTION_CLONE_FIELDS = {'name'}
-
-
-class LoginRequiredMixin(object):
-    @classmethod
-    def as_view(cls, **kwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**kwargs)
-        return login_required(view)
-
 
 @api_view(['GET'])
 def current_user(request):
@@ -162,6 +155,7 @@ class UserDetailView(object):
     success_url = reverse_lazy('user-list')
     form_class = RegistrationForm
 
+
 class UserRoleView(object):
     model = UserRole
     success_url = reverse_lazy('user-role-list')
@@ -220,7 +214,7 @@ class UserListView(LoginRequiredMixin, UserDetailView, ListView):
     pass
 
 
-class CreateUserView(LoginRequiredMixin, UserDetailView, RegistrationView):
+class CreateUserView(LoginRequiredMixin,ProjectMixin, UserDetailView, RegistrationView):
     def register(self, request, form, *args, **kwargs):
         ''' Save all the fields not included in the standard `RegistrationForm`
         into the JSON `data` field of an `ExtraUserDetail` object '''
@@ -242,6 +236,12 @@ class CreateUserView(LoginRequiredMixin, UserDetailView, RegistrationView):
 class UserRoleListView(LoginRequiredMixin, UserRoleView, ListView):
     pass
 
+class UserRoleCreateView(LoginRequiredMixin, UserRoleView, CreateView):
+    pass
+
+
+class UserRoleUpdateView(LoginRequiredMixin, UserRoleView, UpdateView):
+    pass
 
 class UserRoleDeleteView(LoginRequiredMixin, UserRoleView, DeleteView):
     pass

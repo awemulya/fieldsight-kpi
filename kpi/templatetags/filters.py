@@ -19,12 +19,28 @@ register = Library()
 
 
 USURPERS = {
-    'Site': ['Site', 'ProjectManager', 'Owner', 'SuperOwner', 'OrganizationManager'],
-    'Project': ['ProjectManager', 'Owner', 'SuperOwner', 'OrganizationManager'],
-    'Organization': ['Owner', 'SuperOwner', 'OrganizationManager'],
-    'Owner': ['Owner', 'SuperOwner'],
-    'SuperOwner': ['SuperOwner'],
+    'Site': ['Super Admin', 'Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Data Entry'],
+    'Project': ['Super Admin', 'Organization Admin', 'Project Manager'],
+    'Organization': ['Super Admin', 'Organization Admin'],
+    'admin': ['Super Admin'],
 }
+
+@register.tag
+def ifrole(parser, token):
+    try:
+        # split_contents() knows not to split quoted strings.
+        tag_name, role = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError(
+            "%r tag requires exactly two arguments" % token.contents.split()[0]
+        )
+    if not (role[0] == role[-1] and role[0] in ('"', "'")):
+        raise template.TemplateSyntaxError(
+            "%r tag's argument should be in quotes" % tag_name
+        )
+    nodelist = parser.parse('endrole', )
+    parser.delete_first_token()
+    return RoleInGroup(role[1:-1], nodelist)
 
 
 class RoleInGroup(template.Node):
