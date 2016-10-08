@@ -162,59 +162,59 @@ class UserRoleView(object):
     form_class = UserRoleForm
 
     
-class OrganizationListView(LoginRequiredMixin, OrganizationView, ListView):
+class OrganizationListView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, ListView):
     pass
 
 
-class OrganizationCreateView(LoginRequiredMixin, OrganizationView, CreateView):
+class OrganizationCreateView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, CreateView):
     pass
 
 
-class OrganizationUpdateView(LoginRequiredMixin, OrganizationView, UpdateView):
+class OrganizationUpdateView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, UpdateView):
     pass
 
 
-class OrganizationDeleteView(LoginRequiredMixin, OrganizationView, DeleteView):
+class OrganizationDeleteView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, DeleteView):
     pass
 
 
-class ProjectListView(LoginRequiredMixin, ProjectView, ListView):
+class ProjectListView(LoginRequiredMixin, ProjectMixin, ProjectView, ListView):
     pass
 
 
-class ProjectCreateView(LoginRequiredMixin, ProjectView, CreateView):
+class ProjectCreateView(LoginRequiredMixin,OrganizationMixin, ProjectView, CreateView):
     pass
 
 
-class ProjectUpdateView(LoginRequiredMixin, ProjectView, UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, OrganizationMixin, ProjectView, UpdateView):
     pass
 
 
-class ProjectDeleteView(LoginRequiredMixin, ProjectView, DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, OrganizationMixin, ProjectView, DeleteView):
     pass
 
 
-class SiteListView(LoginRequiredMixin, SiteView, ListView):
+class SiteListView(LoginRequiredMixin, SiteMixin, SiteView, ListView):
     pass
 
 
-class SiteCreateView(LoginRequiredMixin, SiteView, CreateView):
+class SiteCreateView(LoginRequiredMixin, ProjectMixin, SiteView, CreateView):
     pass
 
 
-class SiteUpdateView(LoginRequiredMixin, SiteView, UpdateView):
+class SiteUpdateView(LoginRequiredMixin, ProjectMixin, SiteView, UpdateView):
     pass
 
 
-class SiteDeleteView(LoginRequiredMixin, SiteView, DeleteView):
+class SiteDeleteView(LoginRequiredMixin, ProjectMixin, SiteView, DeleteView):
     pass
 
 
-class UserListView(LoginRequiredMixin, UserDetailView, ListView):
+class UserListView(LoginRequiredMixin, ProjectMixin, UserDetailView, ListView):
     pass
 
 
-class CreateUserView(LoginRequiredMixin,ProjectMixin, UserDetailView, RegistrationView):
+class CreateUserView(LoginRequiredMixin, SuperAdminMixin, UserDetailView, RegistrationView):
     def register(self, request, form, *args, **kwargs):
         ''' Save all the fields not included in the standard `RegistrationForm`
         into the JSON `data` field of an `ExtraUserDetail` object '''
@@ -233,18 +233,21 @@ class CreateUserView(LoginRequiredMixin,ProjectMixin, UserDetailView, Registrati
         return new_user
 
 
-class UserRoleListView(LoginRequiredMixin, UserRoleView, ListView):
-    pass
-
-class UserRoleCreateView(LoginRequiredMixin, UserRoleView, CreateView):
+class UserRoleListView(LoginRequiredMixin, ProjectMixin, UserRoleView, ListView):
     pass
 
 
-class UserRoleUpdateView(LoginRequiredMixin, UserRoleView, UpdateView):
+class UserRoleCreateView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, CreateView):
     pass
 
-class UserRoleDeleteView(LoginRequiredMixin, UserRoleView, DeleteView):
+
+class UserRoleUpdateView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, UpdateView):
     pass
+
+
+class UserRoleDeleteView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, DeleteView):
+    pass
+
 
 class NoUpdateModelViewSet(
     mixins.CreateModelMixin,
