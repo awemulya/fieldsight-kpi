@@ -312,7 +312,7 @@
                         <span>{% trans 'Dashboard' %}</span>
                     </a>
                 </li>
-               
+               {% ifrole "Project" %}
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-user"></i>
@@ -326,6 +326,7 @@
                         
                     </ul>
                 </li>
+
                 
                    <li class="sub-menu">
                     <a href="javascript:;">
@@ -339,41 +340,47 @@
                         {% endrole %}
                     </ul>
                 </li>
-                <!---->
-                 <!--<li class="sub-menu">-->
-                    <!--<a href="javascript:;">-->
-                        <!--<i class="fa fa-building-o"></i>-->
-                        <!--<span>{% trans 'Organization' %}</span>-->
-                    <!--</a>-->
-                    <!--<ul class="sub">-->
-                        <!--<li><a href="{% url 'organization-list' %}">{% trans 'Organization' %}</a></li>-->
-                        <!--<li><a href="{% url 'organization-add' %}">{% trans 'Add Organization' %}</a></li>-->
-                        <!---->
-                    <!--</ul>-->
-                <!--</li>-->
+                {% endrole %}
+                {% ifrole "admin" %}
+                 <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-building-o"></i>
+                        <span>{% trans 'Organization' %}</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'organization-list' %}">{% trans 'Organization' %}</a></li>
+                        <li><a href="{% url 'organization-add' %}">{% trans 'Add Organization' %}</a></li>
 
-               <!--<li class="sub-menu">-->
-                    <!--<a href="javascript:;">-->
-                        <!--<i class="fa fa-building-o"></i>-->
-                        <!--<span>{% trans 'Projects' %}</span>-->
-                    <!--</a>-->
-                    <!--<ul class="sub">-->
-                        <!--<li><a href="{% url 'project-list' %}">{% trans 'Projects' %}</a></li>-->
-                        <!--<li><a href="{% url 'project-add' %}">{% trans 'Add Project' %}</a></li>-->
-                        <!---->
-                    <!--</ul>-->
-                <!--</li>-->
-                <!--<li class="sub-menu">-->
-                    <!--<a href="javascript:;">-->
-                        <!--<i class="fa fa-picture-o"></i>-->
-                        <!--<span>{% trans 'Sites' %}</span>-->
-                    <!--</a>-->
-                    <!--<ul class="sub">-->
-                        <!--<li><a href="{% url 'site-list' %}">{% trans 'Site' %}</a></li>-->
-                        <!--<li><a href="{% url 'site-add' %}">{% trans 'Add Site' %}</a></li>-->
-                        <!---->
-                    <!--</ul>-->
-                <!--</li>-->
+                    </ul>
+                </li>
+                {% endrole %}
+                {% ifrole "Organization" %}
+               <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-building-o"></i>
+                        <span>{% trans 'Projects' %}</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'project-list' %}">{% trans 'Projects' %}</a></li>
+                        <li><a href="{% url 'project-add' %}">{% trans 'Add Project' %}</a></li>
+
+                    </ul>
+                </li>
+                {% endrole %}
+
+                {% ifrole "Project" %}
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-picture-o"></i>
+                        <span>{% trans 'Sites' %}</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{% url 'site-list' %}">{% trans 'Site' %}</a></li>
+                        <li><a href="{% url 'site-add' %}">{% trans 'Add Site' %}</a></li>
+
+                    </ul>
+                </li>
+                {% endrole %}
                 <!---->
                 <!--<li class="sub-menu">-->
                     <!--<a href="javascript:;">-->
@@ -385,13 +392,14 @@
                         <!--<li><a href="vector_map.html">Vector Map</a></li>-->
                     <!--</ul>-->
                 <!--</li>-->
+                {% ifrole "Site" %}
                 <li>
                     <a  href="{% url 'kpi-root' %}">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
                         <span>{% trans 'My Forms' %}</span>
                     </a>
                 </li>
-                
+                {% endrole %}
                 
             </ul>            </div>
         <!-- sidebar menu end-->
