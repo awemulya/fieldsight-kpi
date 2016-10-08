@@ -27,10 +27,10 @@ class RegistrationForm(registration_forms.RegistrationForm):
         label=_('Name'),
         required=False,
     )
-    organization = forms.CharField(
-        label=_('Organization name'),
-        required=False,
-    )
+    # organization = forms.CharField(
+    #     label=_('Organization name'),
+    #     required=False,
+    # )
     gender = forms.ChoiceField(
         label=_('Gender'),
         required=False,
@@ -42,35 +42,32 @@ class RegistrationForm(registration_forms.RegistrationForm):
                  )
     )
 
-    sector = forms.ChoiceField(
-        label=_('Sector'),
-        required=False,
-        choices=(('', ''),
-            ) + SECTORS,
-    )
+    # sector = forms.ChoiceField(
+    #     label=_('Sector'),
+    #     required=False,
+    #     choices=(('', ''),
+    #         ) + SECTORS,
+    # )
     country = forms.ChoiceField(
         label=_('Country'),
         required=False,
         choices=(('', ''),) + COUNTRIES,
     )
-    default_language = forms.ChoiceField(
-        label=_('Default language'),
-        choices=settings.LANGUAGES,
-        # TODO: Read the preferred language from the request?
-        initial='en',
-    )
+    # default_language = forms.ChoiceField(
+    #     label=_('Default language'),
+    #     choices=settings.LANGUAGES,
+    #     # TODO: Read the preferred language from the request?
+    #     initial='en',
+    # )
 
     class Meta:
         model = User
         fields = [
             'name',
             'username',
-            'organization',
             'email',
             'gender',
-            'sector',
             'country',
-            'default_language',
             # The 'password' field appears without adding it here; adding it
             # anyway results in a duplicate
         ]
@@ -84,6 +81,7 @@ class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
         exclude = []
+        # exclude = ['organizaton']
 
 
 class ProjectForm(forms.ModelForm):
@@ -93,7 +91,7 @@ class ProjectForm(forms.ModelForm):
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
     class Meta:
         model = Project
-        exclude = []
+        exclude = ['organization']
 
 
 class SiteForm(forms.ModelForm):
@@ -103,7 +101,7 @@ class SiteForm(forms.ModelForm):
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
     class Meta:
         model = Site
-        exclude = []
+        exclude = ['organization','project']
 
 
 class UserRoleForm(forms.ModelForm):

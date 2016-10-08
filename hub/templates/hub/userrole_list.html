@@ -48,16 +48,16 @@
                         {{ org.started_at }}
                     </td>
                     <td>
-                        {{ org.ended_at }}
+                        {{ org.ended_at|default:"-" }}
                     </td>
                     <td>
-                        {{ org.site.name }}
+                        {{ org.site.name|default:"-" }}
                     </td>
                     <td>
-                        {{ org.project.name }}
+                        {{ org.project.name|default:"-" }}
                     </td>
                     <td>
-                        {{ org.organization.name }}
+                        {{ org.organization.name|default:"-"}}
                     </td>
                 </tr>
             {% endfor %}

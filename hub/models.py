@@ -153,10 +153,11 @@ class UserRole(models.Model):
         unique_together = ('user', 'group', 'organization', 'project','site')
 
     def clean(self):
-        if self.group.name == 'Super Admin':
-            # no org proj needed
-            pass
         if self.group.name == 'Site Supervisor' and not self.site_id:
+            raise ValidationError({
+                'site': ValidationError(_('Missing site.'), code='required'),
+            })
+        if self.group.name == 'Central Engineer' and not self.site_id:
             raise ValidationError({
                 'site': ValidationError(_('Missing site.'), code='required'),
             })
@@ -170,23 +171,77 @@ class UserRole(models.Model):
             raise ValidationError({
                 'organization': ValidationError(_('Missing Organization.'), code='required'),
             })
-        # TODO @awemulya
-        # Check if site, project and organization are provided as required for the group
-        # E.g. site must be provided for Site Supervisor, else raise
-        # TODO @awemulya
-        # Auto fill-in project and organization from site for Site supervisor and so on.
-        # Maybe write in save()
-        # TODO @awemulya
-        # Remove unwanted existing fields
-        # e.g. remove site, project for organization admin
-        # TODO @awemulya
-        # Prevent multiple roles for same user for now (not in database level as the requirements are not clear as of now)
-        pass
+
+        if self.group.name == 'Organization Admin' and self.project_id:
+            raise ValidationError({
+                'project': ValidationError(_('No Project needed for Organization Admin.'), code='required'),
+            })
+
+        if self.group.name == 'Organization Admin' and self.site_id:
+            raise ValidationError({
+                'site': ValidationError(_('No Site needed for Organization Admin.'), code='required'),
+            })
+        if self.group.name == 'Super Admin' and self.organization_id:
+            raise ValidationError({
+                'organization': ValidationError(_('No Organization needed for Super Admin.'), code='required'),
+            })
+
+        if self.group.name == 'Super Admin' and self.project_id:
+            raise ValidationError({
+                'project': ValidationError(_('No Project needed for Super Admin.'), code='required'),
+            })
+
+        if self.group.name == 'Super Admin' and self.site_id:
+            raise ValidationError({
+                'site': ValidationError(_('No Site needed for Super Admin.'), code='required'),
+            })
+
+    def save(self, *args, **kwargs):
+        if self.group.name == 'Super Admin':
+            self.organization = None
+            self.project = None
+            self.site = None
+        elif self.group.name == 'Organization Admin':
+            self.project = None
+            self.site = None
+        elif self.group.name == 'Project Manager':
+            self.site = None
+            self.organization = self.project.organization
+
+        elif self.group.name == 'Site Supervisor':
+            self.project = self.site.project
+            self.organization = self.site.project.organization
+
+        elif self.group.name == 'Central Engineer':
+            self.project = self.site.project
+            self.organization = self.site.project.organization
+        super(UserRole, self).save(*args, **kwargs)
+
+    def update(self, *args, **kwargs):
+        if self.group.name == 'Super Admin':
+            self.organization = None
+            self.project = None
+            self.site = None
+        elif self.group.name == 'Organization Admin':
+            self.project = None
+            self.site = None
+        elif self.group.name == 'Project Manager':
+            self.site = None
+            self.organization = self.project.organization
+
+        elif self.group.name == 'Site Supervisor':
+            self.project = self.site.project
+            self.organization = self.site.project.organization
+
+        elif self.group.name == 'Central Engineer':
+            self.project = self.site.project
+            self.organization = self.site.project.organization
+        super(UserRole, self).update(*args, **kwargs)
 
     @staticmethod
     def is_active(user,group):
-        return user.user_roles.filter(group=group)[0].ended_at is None
+        return UserRole.objects.filter(user=user, group=group,ended_date=None).count()
 
     @staticmethod
     def get_active_roles(user):
-        return user.user_roles.all()
+        return UserRole.objects.filter(user=user,ended_at=None).select_related('group', 'organization')

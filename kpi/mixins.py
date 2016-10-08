@@ -166,6 +166,40 @@ class OrganizationView(OrganizationRequiredMixin):
         return form
 
 
+class ProjectView(ProjectRequiredMixin):
+    def form_valid(self, form):
+        form.instance.project = self.request.project
+        return super(ProjectView, self).form_valid(form)
+
+    def get_queryset(self):
+        return super(ProjectView, self).get_queryset().filter(project=self.request.project)
+
+    def get_form(self, *args, **kwargs):
+        form = super(ProjectView, self).get_form(*args, **kwargs)
+        form.project = self.request.project
+        if hasattr(form.Meta, 'project_filters'):
+            for field in form.Meta.project_filters:
+                form.fields[field].queryset = form.fields[field].queryset.filter(project=form.project)
+        return form
+
+
+class SiteView(SiteRequiredMixin):
+    def form_valid(self, form):
+        form.instance.site = self.request.site
+        return super(SiteView, self).form_valid(form)
+
+    def get_queryset(self):
+        return super(SiteView, self).get_queryset().filter(site=self.request.site)
+
+    def get_form(self, *args, **kwargs):
+        form = super(SiteView, self).get_form(*args, **kwargs)
+        form.site = self.request.site
+        if hasattr(form.Meta, 'site_filters'):
+            for field in form.Meta.site_filters:
+                form.fields[field].queryset = form.fields[field].queryset.filter(site=form.site)
+        return form
+
+
 USURPERS = {
     'Site': ['Super Admin', 'Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Data Entry'],
     'Project': ['Super Admin', 'Organization Admin', 'Project Manager'],

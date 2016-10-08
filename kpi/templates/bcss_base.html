@@ -248,7 +248,7 @@
     
 </div> -->
 <div class="top-nav clearfix">
-    <!--search & user info start-->
+    <!--search & user info start-->\
     <ul class="nav pull-right top-menu">
         <li>
             <input type="text" class="form-control search" placeholder=" Search">
@@ -264,9 +264,16 @@
                         {% if request.role %}
                             <li>
                                 <a href="#">{% trans 'Using as' %} {{ request.role.group }}
-                                    {% ifnotequal request.role.group|stringformat:"s" 'Super Admin'%}
-                                    {% trans 'at' %} {{ request.organization }}
-                                    {% endifnotequal %}
+                                    {% if request.site%}
+                                    {% trans 'at Site' %}{{request.site}}
+                                    {% endif %}
+                                    {% if request.project%}
+                                    {% trans 'at Project' %}{{request.project}}
+                                    {% endif %}
+                                    {% if request.organization%}
+                                    {% trans 'at Org' %} {{request.organization}}
+                                    {% endif %}
+
                                 </a>
                             </li>
                         <li role="separator" class="divider"></li>
@@ -276,7 +283,16 @@
                             {% if role.id != request.role.id %}
                                 <li>
                                     <a href="{% url 'users:set_role' role.id %}">{% trans 'Use as' %} {{ role.group }}
-                                        {% trans 'at' %} {{ role.organization }}</a>
+                                    {% if role.site%}
+                                    {% trans 'at Site' %}{{role.site}}
+                                    {% endif %}
+                                    {% if role.project%}
+                                    {% trans 'at Project' %}{{role.project}}
+                                    {% endif %}
+                                    {% if role.organization%}
+                                    {% trans 'at Org' %} {{role.organization}}
+                                    {% endif %}
+                                    </a>
                                 </li>
                             {% endif %}
                         {% endfor %}

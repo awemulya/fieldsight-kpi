@@ -42,7 +42,8 @@ from rest_framework.authtoken.models import Token
 from taggit.models import Tag
 
 from kpi.forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm
-from kpi.mixins import LoginRequiredMixin, OrganizationMixin, SuperAdminMixin, ProjectMixin, SiteMixin
+from kpi.mixins import (LoginRequiredMixin, OrganizationMixin, SuperAdminMixin, ProjectMixin, SiteMixin,
+                        OrganizationView as OView, ProjectView as PView, SiteView as SView)
 from .filters import KpiAssignedObjectPermissionsFilter
 from .filters import KpiObjectPermissionsFilter
 from .filters import SearchFilter
@@ -132,19 +133,20 @@ def dashboard(request):
     return TemplateResponse(request, "bcss_dashboard.html")
 
 
+# class OrganizationView(OView):
 class OrganizationView(object):
     model = Organization
     success_url = reverse_lazy('organization-list')
     form_class = OrganizationForm
 
 
-class ProjectView(object):
+class ProjectView(OView):
     model = Project
     success_url = reverse_lazy('project-list')
     form_class = ProjectForm
 
 
-class SiteView(object):
+class SiteView(OView, PView):
     model = Site
     success_url = reverse_lazy('site-list')
     form_class = SiteForm
@@ -162,51 +164,51 @@ class UserRoleView(object):
     form_class = UserRoleForm
 
     
-class OrganizationListView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, ListView):
+class OrganizationListView(OrganizationView, LoginRequiredMixin, SuperAdminMixin, ListView):
     pass
 
 
-class OrganizationCreateView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, CreateView):
+class OrganizationCreateView(OrganizationView, LoginRequiredMixin, SuperAdminMixin, CreateView):
     pass
 
 
-class OrganizationUpdateView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, UpdateView):
+class OrganizationUpdateView(OrganizationView, LoginRequiredMixin, SuperAdminMixin, UpdateView):
     pass
 
 
-class OrganizationDeleteView(LoginRequiredMixin, SuperAdminMixin, OrganizationView, DeleteView):
+class OrganizationDeleteView(OrganizationView,LoginRequiredMixin, SuperAdminMixin, DeleteView):
     pass
 
 
-class ProjectListView(LoginRequiredMixin, ProjectMixin, ProjectView, ListView):
+class ProjectListView(ProjectView, LoginRequiredMixin, ProjectMixin, ListView):
     pass
 
 
-class ProjectCreateView(LoginRequiredMixin,OrganizationMixin, ProjectView, CreateView):
+class ProjectCreateView(ProjectView, LoginRequiredMixin,OrganizationMixin, CreateView):
     pass
 
 
-class ProjectUpdateView(LoginRequiredMixin, OrganizationMixin, ProjectView, UpdateView):
+class ProjectUpdateView(ProjectView, LoginRequiredMixin, OrganizationMixin, UpdateView):
     pass
 
 
-class ProjectDeleteView(LoginRequiredMixin, OrganizationMixin, ProjectView, DeleteView):
+class ProjectDeleteView(ProjectView, LoginRequiredMixin, OrganizationMixin, DeleteView):
     pass
 
 
-class SiteListView(LoginRequiredMixin, SiteMixin, SiteView, ListView):
+class SiteListView(SiteView, LoginRequiredMixin, SiteMixin, ListView):
     pass
 
 
-class SiteCreateView(LoginRequiredMixin, ProjectMixin, SiteView, CreateView):
+class SiteCreateView(SiteView, LoginRequiredMixin, ProjectMixin, CreateView):
     pass
 
 
-class SiteUpdateView(LoginRequiredMixin, ProjectMixin, SiteView, UpdateView):
+class SiteUpdateView(SiteView, LoginRequiredMixin, ProjectMixin, UpdateView):
     pass
 
 
-class SiteDeleteView(LoginRequiredMixin, ProjectMixin, SiteView, DeleteView):
+class SiteDeleteView(SiteView, LoginRequiredMixin, ProjectMixin, DeleteView):
     pass
 
 
