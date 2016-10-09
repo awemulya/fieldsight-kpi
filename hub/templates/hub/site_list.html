@@ -24,9 +24,7 @@
             <th>{% anchor name _('Name') %}</th>
             <th>{% anchor address _('Address') %}</th>
             <th>{% anchor phone _('Phone') %}</th>
-            <th>{% anchor email _('Email') %}</th>
-            <th>{% anchor fax _('Fax') %}</th>
-            <th>{% anchor website _('Website') %}</th>
+            <th>{% trans 'Location' %}</th>
             </thead>
             <tbody>
             {% for org in paginated_objects %}
@@ -41,13 +39,8 @@
                         {{ org.phone }}
                     </td>
                     <td>
-                        {{ org.email }}
-                    </td>
-                    <td>
-                        {{ org.fax }}
-                    </td>
-                    <td>
-                        {{ org.website }}
+                     {% trans 'Lat' %} :  {{ org.location.y }},
+                       {% trans 'Long' %}: {{ org.location.x }}
                     </td>
                 </tr>
             {% endfor %}

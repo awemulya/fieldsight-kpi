@@ -201,9 +201,9 @@ class SiteView(SiteRequiredMixin):
 
 
 USURPERS = {
-    'Site': ['Super Admin', 'Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Data Entry'],
-    'Project': ['Super Admin', 'Organization Admin', 'Project Manager'],
-    'Organization': ['Super Admin', 'Organization Admin'],
+    'Site': ['Central Engineer', 'Site Supervisor', 'Data Entry'],
+    'Project': ['Project Manager'],
+    'Organization': ['Organization Admin'],
     'admin': ['Super Admin'],
 }
 

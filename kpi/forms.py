@@ -78,6 +78,7 @@ class OrganizationForm(forms.ModelForm):
         super(OrganizationForm, self).__init__(*args, **kwargs)
         if not self.fields['location'].initial:
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
+
     class Meta:
         model = Organization
         exclude = []
@@ -89,6 +90,7 @@ class ProjectForm(forms.ModelForm):
         super(ProjectForm, self).__init__(*args, **kwargs)
         if not self.fields['location'].initial:
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
+
     class Meta:
         model = Project
         exclude = ['organization']
@@ -99,12 +101,14 @@ class SiteForm(forms.ModelForm):
         super(SiteForm, self).__init__(*args, **kwargs)
         if not self.fields['location'].initial:
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
+
     class Meta:
         model = Site
-        exclude = ['organization','project']
+        exclude = ['project']
 
 
 class UserRoleForm(forms.ModelForm):
+
     class Meta:
         model = UserRole
         exclude = []

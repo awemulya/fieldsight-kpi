@@ -328,7 +328,7 @@
                         <span>{% trans 'Dashboard' %}</span>
                     </a>
                 </li>
-               {% ifrole "Project" %}
+               {% ifrole "admin" %}
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-user"></i>
@@ -336,9 +336,9 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{% url 'user-list' %}">{% trans 'Users' %}</a></li>
-                        {% ifrole "admin" %}
+
                         <li><a href="{% url 'user-create' %}">{% trans 'Add User' %}</a></li>
-                        {% endrole %}
+
                         
                     </ul>
                 </li>
@@ -351,13 +351,13 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{% url 'user-role-list' %}">{% trans 'Users Roles' %}</a></li>
-                        {% ifrole "admin" %}
+
                         <li><a href="{% url 'user-role-add' %}">{% trans 'Assign Roles' %}</a></li>
-                        {% endrole %}
+
                     </ul>
                 </li>
-                {% endrole %}
-                {% ifrole "admin" %}
+
+
                  <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-building-o"></i>

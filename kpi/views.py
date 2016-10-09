@@ -146,7 +146,7 @@ class ProjectView(OView):
     form_class = ProjectForm
 
 
-class SiteView(OView, PView):
+class SiteView(PView):
     model = Site
     success_url = reverse_lazy('site-list')
     form_class = SiteForm
@@ -180,7 +180,7 @@ class OrganizationDeleteView(OrganizationView,LoginRequiredMixin, SuperAdminMixi
     pass
 
 
-class ProjectListView(ProjectView, LoginRequiredMixin, ProjectMixin, ListView):
+class ProjectListView(ProjectView, LoginRequiredMixin, OrganizationMixin, ListView):
     pass
 
 
@@ -196,7 +196,7 @@ class ProjectDeleteView(ProjectView, LoginRequiredMixin, OrganizationMixin, Dele
     pass
 
 
-class SiteListView(SiteView, LoginRequiredMixin, SiteMixin, ListView):
+class SiteListView(SiteView, LoginRequiredMixin, ProjectMixin, ListView):
     pass
 
 
@@ -212,7 +212,7 @@ class SiteDeleteView(SiteView, LoginRequiredMixin, ProjectMixin, DeleteView):
     pass
 
 
-class UserListView(LoginRequiredMixin, ProjectMixin, UserDetailView, ListView):
+class UserListView(LoginRequiredMixin, SuperAdminMixin, UserDetailView, ListView):
     pass
 
 
@@ -235,7 +235,7 @@ class CreateUserView(LoginRequiredMixin, SuperAdminMixin, UserDetailView, Regist
         return new_user
 
 
-class UserRoleListView(LoginRequiredMixin, ProjectMixin, UserRoleView, ListView):
+class UserRoleListView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, ListView):
     pass
 
 
