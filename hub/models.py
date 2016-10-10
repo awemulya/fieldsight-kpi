@@ -172,29 +172,29 @@ class UserRole(models.Model):
                 'organization': ValidationError(_('Missing Organization.'), code='required'),
             })
 
-        if self.group.name == 'Organization Admin' and self.project_id:
-            raise ValidationError({
-                'project': ValidationError(_('No Project needed for Organization Admin.'), code='required'),
-            })
-
-        if self.group.name == 'Organization Admin' and self.site_id:
-            raise ValidationError({
-                'site': ValidationError(_('No Site needed for Organization Admin.'), code='required'),
-            })
-        if self.group.name == 'Super Admin' and self.organization_id:
-            raise ValidationError({
-                'organization': ValidationError(_('No Organization needed for Super Admin.'), code='required'),
-            })
-
-        if self.group.name == 'Super Admin' and self.project_id:
-            raise ValidationError({
-                'project': ValidationError(_('No Project needed for Super Admin.'), code='required'),
-            })
-
-        if self.group.name == 'Super Admin' and self.site_id:
-            raise ValidationError({
-                'site': ValidationError(_('No Site needed for Super Admin.'), code='required'),
-            })
+        # if self.group.name == 'Organization Admin' and self.project_id:
+        #     raise ValidationError({
+        #         'project': ValidationError(_('No Project needed for Organization Admin.'), code='required'),
+        #     })
+        #
+        # if self.group.name == 'Organization Admin' and self.site_id:
+        #     raise ValidationError({
+        #         'site': ValidationError(_('No Site needed for Organization Admin.'), code='required'),
+        #     })
+        # if self.group.name == 'Super Admin' and self.organization_id:
+        #     raise ValidationError({
+        #         'organization': ValidationError(_('No Organization needed for Super Admin.'), code='required'),
+        #     })
+        #
+        # if self.group.name == 'Super Admin' and self.project_id:
+        #     raise ValidationError({
+        #         'project': ValidationError(_('No Project needed for Super Admin.'), code='required'),
+        #     })
+        #
+        # if self.group.name == 'Super Admin' and self.site_id:
+        #     raise ValidationError({
+        #         'site': ValidationError(_('No Site needed for Super Admin.'), code='required'),
+        #     })
 
     def save(self, *args, **kwargs):
         if self.group.name == 'Super Admin':
