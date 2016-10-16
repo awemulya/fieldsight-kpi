@@ -25,22 +25,26 @@
             <th>{% anchor address _('Address') %}</th>
             <th>{% anchor phone _('Phone') %}</th>
             <th>{% trans 'Location' %}</th>
+            <th>{% anchor is_active _('Status') %}</th>
             </thead>
             <tbody>
-            {% for org in paginated_objects %}
+            {% for obj in paginated_objects %}
                 <tr>
                     <td>
-                        <a href="{% url 'site-edit' org.pk %}">{{ org.name }}</a>
+                        <a href="{% url 'site-edit' obj.pk %}">{{ obj.name }}</a>
                     </td>
                     <td>
-                        {{ org.address }}
+                        {{ obj.address }}
                     </td>
                     <td>
-                        {{ org.phone }}
+                        {{ obj.phone }}
                     </td>
                     <td>
-                     {% trans 'Lat' %} :  {{ org.location.y }},
-                       {% trans 'Long' %}: {{ org.location.x }}
+                     {% trans 'Lat' %} :  {{ obj.location.y }},
+                       {% trans 'Long' %}: {{ obj.location.x }}
+                    </td>
+                    <td>
+                        {{ obj.is_active|activeness }}
                     </td>
                 </tr>
             {% endfor %}
