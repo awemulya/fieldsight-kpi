@@ -97,6 +97,7 @@ class Project(models.Model):
     fax = models.CharField(max_length=255, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     organization = models.ForeignKey(Organization, related_name='projects')
+    is_active = models.BooleanField(default=True)
 
     objects = GeoManager()
 
