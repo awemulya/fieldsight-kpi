@@ -18,6 +18,13 @@ from kobo_playground import settings
 register = Library()
 
 
+@register.filter
+def activeness(is_active):
+    if is_active:
+        return "Active"
+    return "In Active"
+
+
 # USURPERS = {
 #     'Site': ['Super Admin', 'Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Data Entry'],
 #     'Project': ['Super Admin', 'Organization Admin', 'Project Manager'],
