@@ -64,6 +64,7 @@ class Organization(models.Model):
     email = models.EmailField(blank=True, null=True)
     fax = models.CharField(max_length=255, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return u'{}'.format(self.name)
@@ -121,6 +122,7 @@ class Site(models.Model):
     location = PointField(geography=True, srid=4326, blank=True, null=True)
     phone = models.CharField(max_length=255, blank=True, null=True)
     project = models.ForeignKey(Project, related_name='sites')
+    is_active = models.BooleanField(default=True)
 
     objects = GeoManager()
 
