@@ -40,6 +40,11 @@ class RegistrationForm(registration_forms.RegistrationFormUniqueEmail):
                  ('other', _('Other')),
                  )
     )
+    is_active = forms.BooleanField(
+        label=_('Active'),
+        required=False,
+        initial=True
+    )
 
     # sector = forms.ChoiceField(
     #     label=_('Sector'),
