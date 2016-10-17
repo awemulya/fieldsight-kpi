@@ -16,7 +16,7 @@ USERNAME_INVALID_MESSAGE = _(
 )
 
 
-class RegistrationForm(registration_forms.RegistrationForm):
+class RegistrationForm(registration_forms.RegistrationFormUniqueEmail):
     username = forms.RegexField(
         regex=USERNAME_REGEX,
         max_length=USERNAME_MAX_LENGTH,
@@ -24,7 +24,7 @@ class RegistrationForm(registration_forms.RegistrationForm):
         error_messages={'invalid': USERNAME_INVALID_MESSAGE}
     )
     name = forms.CharField(
-        label=_('Name'),
+        label=_('Full Name'),
         required=False,
     )
     # organization = forms.CharField(
@@ -35,7 +35,6 @@ class RegistrationForm(registration_forms.RegistrationForm):
         label=_('Gender'),
         required=False,
         choices=(
-                 ('', ''),
                  ('male', _('Male')),
                  ('female', _('Female')),
                  ('other', _('Other')),
@@ -48,11 +47,11 @@ class RegistrationForm(registration_forms.RegistrationForm):
     #     choices=(('', ''),
     #         ) + SECTORS,
     # )
-    country = forms.ChoiceField(
-        label=_('Country'),
-        required=False,
-        choices=(('', ''),) + COUNTRIES,
-    )
+    # country = forms.ChoiceField(
+    #     label=_('Country'),
+    #     required=False,
+    #     choices=(('', ''),) + COUNTRIES,
+    # )
     # default_language = forms.ChoiceField(
     #     label=_('Default language'),
     #     choices=settings.LANGUAGES,
@@ -67,7 +66,6 @@ class RegistrationForm(registration_forms.RegistrationForm):
             'username',
             'email',
             'gender',
-            'country',
             # The 'password' field appears without adding it here; adding it
             # anyway results in a duplicate
         ]
