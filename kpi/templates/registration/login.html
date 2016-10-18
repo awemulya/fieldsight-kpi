@@ -1,5 +1,5 @@
 {% extends "registration.html" %}
-{% load staticfiles %}
+{% load staticfiles i18n filters %}
 
 {% block content %}
 
@@ -15,16 +15,17 @@
         <div class="login-wrap">
             <div class="user-login-info">
                 {% csrf_token %}
-              {{ form.non_field_errors }}
-
-                <p>{{ form.username.errors.as_text }}</p>
-                <input type="email" class="form-control" placeholder="User Email" name="email" autofocus>
+                {% if form_errors %}
+                <p class="alert-error"
+                   role='alert'>{% trans "Your email and password didn't match. Please try again." %}</p>
+                {% endif %}
+                {{ form.non_field_errors }}
+                <p>{{ form.email.errors.as_text }}</p>
+                <input type="email" class="form-control" placeholder="User Email" name="email" value="{{ username }}" autofocus>
                 
                 <p>{{ form.password.errors.as_text }}</p>
 
-
-
-                <input type="password" class="form-control" placeholder="Password" name="password">
+                <input type="password" class="form-control" placeholder="Password" name="password" value="{{ password }}">
                 
                 
             </div>

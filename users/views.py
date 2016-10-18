@@ -21,7 +21,10 @@ def web_authenticate(username=None, password=None):
         except User.DoesNotExist:
             return None
 
+
 def web_login(request):
+    if request.user.is_authenticated():
+        return redirect('/dashboard/')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -32,7 +35,9 @@ def web_login(request):
                 login(request, user)
                 return HttpResponseRedirect('/dashboard/')
             else:
-                return render(request, 'registration/login.html', {'form': form})
+                return render(request, 'registration/login.html', {'form':form, 'form_errors':True})
+        else:
+            return render(request, 'registration/login.html', {'form': form})
     else:
         form = LoginForm()
 
