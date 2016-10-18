@@ -41,6 +41,7 @@ TEMPLATE_DEBUG = (os.environ.get('TEMPLATE_DEBUG', 'True') == 'True')
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(' ')
 
 LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_URL = '/users/login'
 
 # Application definition
 
@@ -88,6 +89,7 @@ MIDDLEWARE_CLASSES = (
     'hub.middleware.OtherFormBuilderRedirectMiddleware',
     'linaro_django_pagination.middleware.PaginationMiddleware',
     'webstack_django_sorting.middleware.SortingMiddleware',
+    # 'users.middleware.EmailModelBackend',
     'users.middleware.RoleMiddleware',
 )
 

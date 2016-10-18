@@ -522,7 +522,6 @@ class OneTimeAuthenticationKeyViewSet(
         return super(OneTimeAuthenticationKeyViewSet, self).create(
             request, *args, **kwargs)
 
-
 @require_POST
 @csrf_exempt
 def one_time_login(request):

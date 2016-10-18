@@ -7,7 +7,7 @@
 
     <div class="container">
 
-      <form method="post" class="form-signin" action=".">
+      <form method="post" class="form-signin" action="{% url 'users:web_login' %}">
         <div class="login-heading-with-image">
           <img class="form-signin-heading-img" src="{{STATIC_URL}}images/logo1.png" / >
           <!-- <h2 class="form-signin-heading">sign in now</h2> -->
@@ -18,7 +18,7 @@
               {{ form.non_field_errors }}
 
                 <p>{{ form.username.errors.as_text }}</p>
-                <input type="text" class="form-control" placeholder="User ID" name="username" autofocus>
+                <input type="email" class="form-control" placeholder="User Email" name="email" autofocus>
                 
                 <p>{{ form.password.errors.as_text }}</p>
 
@@ -83,7 +83,7 @@
  {{ block.super }}
   <script>
   $(function () {
-    $('form.registration input#id_username').attr('placeholder', 'Username');
+    $('form.registration input#id_username').attr('placeholder', 'Email');
     $('form.registration input#id_password').attr('placeholder', 'Password');
     $('form.registration > p > label').addClass('hidden');
   });
