@@ -43,7 +43,7 @@
                         {{ userdetail.user.is_active|activeness }}
                     </td>
                     <td>
-                        <a class="btn btn-success btn-raised" href="{% url 'users:alter_status' pk=user.id %}">
+                        <a class="btn btn-success btn-raised" href="{% url 'users:alter_status' pk=userdetail.user.id %}">
                             <!--later with js framework ko in some and angular in some-->
                             {{ userdetail.user.is_active|alter_status }} {% trans 'User' %}</a>
                     </td>

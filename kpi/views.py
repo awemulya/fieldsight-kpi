@@ -136,31 +136,31 @@ def dashboard(request):
 # class OrganizationView(OView):
 class OrganizationView(object):
     model = Organization
-    success_url = reverse_lazy('organization-list')
+    success_url = reverse_lazy('kpi:organization-list')
     form_class = OrganizationForm
 
 
 class ProjectView(OView):
     model = Project
-    success_url = reverse_lazy('project-list')
+    success_url = reverse_lazy('kpi:project-list')
     form_class = ProjectForm
 
 
 class SiteView(PView):
     model = Site
-    success_url = reverse_lazy('site-list')
+    success_url = reverse_lazy('kpi:site-list')
     form_class = SiteForm
 
 
 class UserDetailView(object):
     model = ExtraUserDetail
-    success_url = reverse_lazy('user-list')
+    success_url = reverse_lazy('kpi:user-list')
     form_class = RegistrationForm
 
 
 class UserRoleView(object):
     model = UserRole
-    success_url = reverse_lazy('user-role-list')
+    success_url = reverse_lazy('kpi:user-role-list')
     form_class = UserRoleForm
 
     
