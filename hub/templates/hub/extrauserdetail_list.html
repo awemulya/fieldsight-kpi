@@ -5,7 +5,7 @@
 {% block page-title %}{% trans 'Users' %}{% endblock %}
 
 {% block head %}
-    <a class="btn btn-success btn-raised" href="{% url 'user-create' %}">{% trans 'New' %} {% trans 'User' %}</a>
+    <a class="btn btn-success btn-raised" href="{% url 'kpi:user-create' %}">{% trans 'New' %} {% trans 'User' %}</a>
 {% endblock %}
 
 {% block content %}
@@ -25,6 +25,7 @@
             <th>{% anchor user.get_full_name _('Fullname') %}</th>
             <th>{% anchor user.email _('Email') %}</th>
             <th>{% anchor user.is_active _('Active') %}</th>
+            <th>Activate/Deactivate</th>
             </thead>
             <tbody>
             {% for userdetail in paginated_objects %}
@@ -41,7 +42,11 @@
                     <td>
                         {{ userdetail.user.is_active|activeness }}
                     </td>
-
+                    <td>
+                        <a class="btn btn-success btn-raised" href="{% url 'users:alter_status' pk=user.id %}">
+                            <!--later with js framework ko in some and angular in some-->
+                            {{ userdetail.user.is_active|alter_status }} {% trans 'User' %}</a>
+                    </td>
 
                 </tr>
             {% endfor %}

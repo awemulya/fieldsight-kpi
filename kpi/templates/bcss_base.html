@@ -302,7 +302,7 @@
                         {% endif %}
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                <li><a href="{% url 'auth_logout' %}"><i class="fa fa-key"></i> Log Out</a></li>
+                <li><a href="{% url 'kpi:auth_logout' %}"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -335,9 +335,9 @@
                         <span>{% trans 'Users' %}</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{% url 'user-list' %}">{% trans 'Users' %}</a></li>
+                        <li><a href="{% url 'kpi:user-list' %}">{% trans 'Users' %}</a></li>
 
-                        <li><a href="{% url 'user-create' %}">{% trans 'Add User' %}</a></li>
+                        <li><a href="{% url 'kpi:user-create' %}">{% trans 'Add User' %}</a></li>
 
                         
                     </ul>
@@ -350,9 +350,9 @@
                         <span>{% trans 'Users Roles' %}</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{% url 'user-role-list' %}">{% trans 'Users Roles' %}</a></li>
+                        <li><a href="{% url 'kpi:user-role-list' %}">{% trans 'Users Roles' %}</a></li>
 
-                        <li><a href="{% url 'user-role-add' %}">{% trans 'Assign Roles' %}</a></li>
+                        <li><a href="{% url 'kpi:user-role-add' %}">{% trans 'Assign Roles' %}</a></li>
 
                     </ul>
                 </li>
@@ -364,8 +364,8 @@
                         <span>{% trans 'Organization' %}</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{% url 'organization-list' %}">{% trans 'Organization' %}</a></li>
-                        <li><a href="{% url 'organization-add' %}">{% trans 'Add Organization' %}</a></li>
+                        <li><a href="{% url 'kpi:organization-list' %}">{% trans 'Organization' %}</a></li>
+                        <li><a href="{% url 'kpi:organization-add' %}">{% trans 'Add Organization' %}</a></li>
 
                     </ul>
                 </li>
@@ -377,8 +377,8 @@
                         <span>{% trans 'Projects' %}</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{% url 'project-list' %}">{% trans 'Projects' %}</a></li>
-                        <li><a href="{% url 'project-add' %}">{% trans 'Add Project' %}</a></li>
+                        <li><a href="{% url 'kpi:project-list' %}">{% trans 'Projects' %}</a></li>
+                        <li><a href="{% url 'kpi:project-add' %}">{% trans 'Add Project' %}</a></li>
 
                     </ul>
                 </li>
@@ -443,6 +443,14 @@
                          </span>
                     </header>
                     <div class="panel-body">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
                     {% block content %}
                         This is a sample page
                         {% endblock %}

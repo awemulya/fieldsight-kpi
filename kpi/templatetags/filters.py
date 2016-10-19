@@ -24,6 +24,12 @@ def activeness(is_active):
         return "Active"
     return "In Active"
 
+@register.filter
+def alter_status(is_active):
+    if is_active:
+        return "Deactivate"
+    return "Activate"
+
 
 # USURPERS = {
 #     'Site': ['Super Admin', 'Organization Admin', 'Project Manager', 'Central Engineer', 'Site Supervisor', 'Data Entry'],

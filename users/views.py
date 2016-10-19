@@ -1,8 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from hub.models import UserRole as Role
+from hub.models import UserRole as Role, Project
+from kpi.mixins import group_required
 from .forms import LoginForm
 from django.contrib.auth import authenticate
 
@@ -42,3 +45,21 @@ def web_login(request):
         form = LoginForm()
 
     return render(request, 'registration/login.html', {'form': form})
+
+# @group_required("admin")
+
+
+def alter_status(request, pk):
+    try:
+        user = User.objects.get(pk=int(pk))
+            # alter status method on custom user
+        if user.is_active:
+            user.is_active = False
+            messages.info(request, 'User {0} Deactivated.'.format(user.get_full_name()))
+        else:
+            user.is_active = True
+            messages.info(request, 'User {0} Activated.'.format(user.get_full_name()))
+        user.save()
+    except:
+        messages.info(request, 'User {0} not found.'.format(user.get_full_name()))
+    return HttpResponseRedirect(reverse('kpi:user-list'))
