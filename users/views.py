@@ -4,8 +4,15 @@ from django.contrib.auth import login
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+from rest_framework import parsers
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from hub.models import UserRole as Role, Project
+from rest_framework import renderers
 from kpi.mixins import group_required
+from users.serializers import AuthCustomTokenSerializer
 from .forms import LoginForm
 from django.contrib.auth import authenticate
 
@@ -63,3 +70,31 @@ def alter_status(request, pk):
     except:
         messages.info(request, 'User {0} not found.'.format(user.get_full_name()))
     return HttpResponseRedirect(reverse('kpi:user-list'))
+
+
+def auth_token(request):
+    pass
+
+
+class ObtainAuthToken(APIView):
+    throttle_classes = ()
+    permission_classes = ()
+    parser_classes = (
+        parsers.FormParser,
+        parsers.MultiPartParser,
+        parsers.JSONParser,
+    )
+
+    renderer_classes = (renderers.JSONRenderer,)
+
+    def post(self, request):
+        serializer = AuthCustomTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+
+        content = {
+            'token': unicode(token.key),
+        }
+
+        return Response(content)
