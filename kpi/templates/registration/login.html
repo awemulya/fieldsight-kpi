@@ -32,18 +32,13 @@
             <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me
                 <span class="pull-right">
-                    <a href="{% url 'auth_password_reset' %}" class="registration__forgot"> Forgot Password?</a>
+                    <a href="/accounts/password/reset" class="registration__forgot"> Forgot Password?</a>
 
                 </span>
             </label>
             <button class="btn btn-lg btn-login btn-block registration__action" type="submit" value="Login" >Sign in</button>
              <input type="hidden" name="next" value="{{ next }}" />
-            <!-- <div class="registration">
-                Don't have an account yet?
-                <a class="" href="{% url 'registration_register' %}">
-                    Create an account
-                </a>
-            </div> -->
+
 
         </div>
 
@@ -53,29 +48,6 @@
     </div>
 
 
-
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-   
-
-  
-<!-- <div class="registration__bg">
-  <form method="post" action="." class="registration registration--login">
-    <div class="registration--logo"><a href="/"><img src="{% static 'img/kobologo.svg' %}"/></a></div>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <a href="{% url 'auth_password_reset' %}" class="registration__forgot">Forgot?</a>
-
-    <input type="submit" value="Login" class="registration__action" />
-    <input type="hidden" name="next" value="{{ next }}" />
-
-    <div class="registration__footer">
-      or <a href="{% url 'registration_register' %}">create an account</a>
-    </div>
-  </form>
-
-    
-</div> -->
 
 
 {% endblock %}

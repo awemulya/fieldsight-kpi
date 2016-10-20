@@ -1,20 +1,23 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.contrib.auth import authenticate
 from rest_framework import parsers
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from kpi.mixins import CreateView, UpdateView, DeleteView
 from hub.models import UserRole as Role, Project
 from rest_framework import renderers
 from kpi.mixins import group_required
+from users.mixins import OwnProfileRequiredMixin, OwnProfileView
+from users.models import UserProfile
 from users.serializers import AuthCustomTokenSerializer
-from .forms import LoginForm
-from django.contrib.auth import authenticate
+from .forms import LoginForm, ProfileForm
+
 
 def set_role(request, pk):
     role = Role.objects.get(pk=pk, user=request.user)
@@ -98,3 +101,33 @@ class ObtainAuthToken(APIView):
         }
 
         return Response(content)
+
+
+class UserProfileView(object):
+    model = UserProfile
+    success_url = reverse_lazy('kpi:profile')
+    form_class = ProfileForm
+
+
+class ProfileUpdate(UserProfileView,UpdateView):
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        super(ProfileUpdate, self).save(form)
+
+
+def profile_update(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            form.save(request.user)
+            messages.info(request, "Profile Updated")
+            return render(request, 'users/profile_update.html', {'form': form})
+        return render(request, 'users/profile_update.html', {'form': form})
+    else:
+        try:
+            instance = UserProfile.objects.get(user_id=request.user.id)
+            form = ProfileForm(instance=instance)
+        except:
+            form = ProfileForm()
+    return render(request, 'users/profile_update.html', {'form': form})
