@@ -42,8 +42,11 @@ def web_login(request):
             pwd = form.cleaned_data['password']
             user = web_authenticate(username=email, password=pwd)
             if user is not None:
-                login(request, user)
-                return HttpResponseRedirect('/dashboard/')
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('/dashboard/')
+                else:
+                    return render(request, 'registration/login.html', {'form':form, 'inactive':True})
             else:
                 return render(request, 'registration/login.html', {'form':form, 'form_errors':True})
         else:

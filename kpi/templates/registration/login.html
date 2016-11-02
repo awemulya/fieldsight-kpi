@@ -19,6 +19,10 @@
                 <p class="alert-error"
                    role='alert'>{% trans "Your email and password didn't match. Please try again." %}</p>
                 {% endif %}
+                {% if inactive %}
+                <p class="alert-error"
+                   role='alert'>{% trans "Your Account is Inactive Please Contact Administrator." %}</p>
+                {% endif %}
                 {{ form.non_field_errors }}
                 <p>{{ form.email.errors.as_text }}</p>
                 <input type="email" class="form-control" placeholder="User Email" name="email" value="{{ username }}" autofocus>
