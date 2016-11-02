@@ -69,7 +69,7 @@ def alter_status(request, pk):
         user.save()
     except:
         messages.info(request, 'User {0} not found.'.format(user.get_full_name()))
-    return HttpResponseRedirect(reverse('kpi:user-list'))
+    return HttpResponseRedirect(reverse('user-list'))
 
 
 def auth_token(request):

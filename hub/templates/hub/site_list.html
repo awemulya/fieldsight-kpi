@@ -5,7 +5,7 @@
 {% block page-title %}{% trans 'Sites' %}{% endblock %}
 
 {% block head %}
-    <a class="btn btn-success btn-raised" href="{% url 'kpi:site-add' %}">{% trans 'New' %} {% trans 'Site' %}</a>
+    <a class="btn btn-success btn-raised" href="{% url 'site-add' %}">{% trans 'New' %} {% trans 'Site' %}</a>
 {% endblock %}
 
 {% block content %}
@@ -31,7 +31,7 @@
             {% for obj in paginated_objects %}
                 <tr>
                     <td>
-                        <a href="{% url 'kpi:site-edit' obj.pk %}">{{ obj.name }}</a>
+                        <a href="{% url 'site-edit' obj.pk %}">{{ obj.name }}</a>
                     </td>
                     <td>
                         {{ obj.address }}

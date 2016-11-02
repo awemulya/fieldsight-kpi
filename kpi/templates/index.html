@@ -6,7 +6,7 @@
     <title>FieldSight</title>
     <meta name="description" content="koboform view">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="kpi-root-url" content="{% url 'kpi:kpi-root' %}">
+    <meta name="kpi-root-url" content="{% url 'kpi-root' %}">
     {% if git_commit %}<meta name="git-commit" content="{{git_commit}}">{% endif %}
     {% if csrf_token %}<meta name="csrf-token" content="{{csrf_token}}">{% endif %}
 
@@ -29,7 +29,7 @@
 
     {% block footer %}
       <!-- Make Django's internationalization functionality available in client code. -->
-      <script type="text/javascript" src="{% url 'kpi:javascript-catalog' %}"></script>
+      <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
       {% render_bundle 'app' 'js' %}
 
