@@ -1,7 +1,7 @@
 {% extends "bcss_base.html" %}
 {% load i18n %}
 {% load filters %}
-
+{% block page-title %} {% trans 'Profile '  %}{{request.user }}{% endblock %}
 {% block head %}
     Update Profile {{request.user.full_name }}
 {% endblock %}
