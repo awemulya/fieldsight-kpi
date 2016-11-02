@@ -31,15 +31,7 @@ class RegistrationForm(registration_forms.RegistrationFormUniqueEmail):
     #     label=_('Organization name'),
     #     required=False,
     # )
-    gender = forms.ChoiceField(
-        label=_('Gender'),
-        required=False,
-        choices=(
-                 ('male', _('Male')),
-                 ('female', _('Female')),
-                 ('other', _('Other')),
-                 )
-    )
+
     is_active = forms.BooleanField(
         label=_('Active'),
         required=False,
@@ -70,8 +62,7 @@ class RegistrationForm(registration_forms.RegistrationFormUniqueEmail):
             'name',
             'username',
             'email',
-            'gender',
-            # The 'password' field appears without adding it here; adding it
+             # The 'password' field appears without adding it here; adding it
             # anyway results in a duplicate
         ]
 

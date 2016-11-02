@@ -200,6 +200,7 @@ class SiteView(SiteRequiredMixin):
         return form
 
 
+
 USURPERS = {
     'Site': ['Central Engineer', 'Site Supervisor', 'Data Entry'],
     'Project': ['Project Manager'],

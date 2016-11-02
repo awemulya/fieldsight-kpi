@@ -300,7 +300,7 @@
                         {% if request.user.roles.all.count > 1 %}
                             <li role="separator" class="divider"></li>
                         {% endif %}
-                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                <li><a href="{% url 'users:profile_update'%}"><i class=" fa fa-suitcase"></i>Profile</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                 <li><a href="{% url 'auth_logout' %}"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
