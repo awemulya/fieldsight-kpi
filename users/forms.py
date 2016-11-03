@@ -23,6 +23,3 @@ class ProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['address','gender','phone', 'skype']
 
-    def save(self, user):
-        self.instance.user = user
-        super(ProfileForm, self).save()

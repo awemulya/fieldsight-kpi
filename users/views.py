@@ -108,7 +108,7 @@ class ObtainAuthToken(APIView):
 
 class UserProfileView(object):
     model = UserProfile
-    success_url = reverse_lazy('kpi:profile')
+    success_url = reverse_lazy('profile')
     form_class = ProfileForm
 
 
@@ -123,7 +123,18 @@ def profile_update(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST)
         if form.is_valid():
-            form.save(request.user)
+            up = form.save(commit=False)
+            user = request.user
+            try:
+                user_profile = user.profile
+                user_profile.skype = up.skype
+                user_profile.address = up.address
+                user_profile.phone = up.phone
+                user_profile.gender = up.gender
+                user_profile.save()
+            except:
+                up.user = user
+                up.save()
             messages.info(request, "Profile Updated")
             return render(request, 'users/profile_update.html', {'form': form})
         return render(request, 'users/profile_update.html', {'form': form})
