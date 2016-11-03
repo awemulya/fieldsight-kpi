@@ -1,0 +1,61 @@
+{% extends "bcss_base.html" %}
+{% load i18n staticfiles %}
+{% load filters %}  
+
+{% block page-title %}{% trans 'Sites' %}{% endblock %}
+
+{% block head %}
+    <a class="btn btn-success btn-raised" href="{% url 'site-add' %}">{% trans 'New' %} {% trans 'Site' %}</a>
+{% endblock %}
+
+{% block content %}
+
+    {% load pagination_tags %}
+    {% load sorting_tags %}
+    {% load filters %}
+
+    <div class='adv-table'>
+
+        {% autosort object_list as sorted_objects %}
+        {% autopaginate object_list 25 as paginated_objects %}
+
+        <table class="table table-striped" id="dynamic-table1">
+            <thead>
+            <th>{% anchor name _('Name') %}</th>
+            <th>{% anchor address _('Address') %}</th>
+            <th>{% anchor phone _('Phone') %}</th>
+            <th>{% trans 'Location' %}</th>
+            <th>{% anchor is_active _('Status') %}</th>
+            </thead>
+            <tbody>
+            {% for obj in paginated_objects %}
+                <tr>
+                    <td>
+                        <a href="{% url 'site-edit' obj.pk %}">{{ obj.name }}</a>
+                    </td>
+                    <td>
+                        {{ obj.address }}
+                    </td>
+                    <td>
+                        {{ obj.phone }}
+                    </td>
+                    <td>
+                     {% trans 'Lat' %} :  {{ obj.location.y }},
+                       {% trans 'Long' %}: {{ obj.location.x }}
+                    </td>
+
+                    <td>
+                        {{ obj.is_active|activeness }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% paginate %}
+
+    </div>
+
+
+
+{% endblock %}

@@ -15,7 +15,7 @@ from django.utils.http import is_safe_url
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.conf import settings
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt

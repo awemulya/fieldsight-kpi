@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'kpi.apps.KpiConfig',
     'hub',
     'users',
+    'fieldsight',
     'webpack_loader',
     'registration', # Must come AFTER kpi
     'django.contrib.admin', # Must come AFTER registration

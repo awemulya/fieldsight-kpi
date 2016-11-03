@@ -39,7 +39,7 @@ class FormBuilderPreference(models.Model):
         choice_label = choices_dict[self.preferred_builder]
         return u'{} prefers {}'.format(self.user, choice_label)
 
-
+#  fieldsignt
 class ExtraUserDetail(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='extra_details')
     data = JSONField(default={})

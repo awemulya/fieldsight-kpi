@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^dashboard/$', 'kpi.views.dashboard', name='dashboard'),
     url(r'^users/', include('users.urls', namespace='users')),
+    url(r'^fieldsight/', include('fieldsight.urls', namespace='fieldsight')),
     # url(r'^', include('kpi.urls', namespace='kpi')),
     url(r'^', include('kpi.urls')),
     url(r'kobocat/', RedirectView.as_view(url=settings.KOBOCAT_URL, permanent=True)),
