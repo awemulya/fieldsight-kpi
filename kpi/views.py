@@ -1,4 +1,3 @@
-from distutils.util import strtobool
 from itertools import chain
 import copy
 import json
@@ -8,20 +7,16 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.db.models import Q, Count
+from django.db.models import Q
 from django.forms import model_to_dict
 from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.utils.http import is_safe_url
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.conf import settings
-from django.core.urlresolvers import reverse_lazy
-from django.views.generic.list import ListView
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
-from registration.backends.default.views import RegistrationView
-from registration.forms import RegistrationForm
 
 from rest_framework import (
     viewsets,
@@ -31,7 +26,6 @@ from rest_framework import (
     exceptions,
 )
 from rest_framework.decorators import api_view
-from rest_framework.decorators import renderer_classes
 from rest_framework.decorators import detail_route
 from rest_framework.decorators import authentication_classes
 from rest_framework.parsers import MultiPartParser
@@ -40,15 +34,11 @@ from rest_framework.reverse import reverse
 from rest_framework.authtoken.models import Token
 
 from taggit.models import Tag
-
-from kpi.forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm
-from kpi.mixins import (LoginRequiredMixin, OrganizationMixin, SuperAdminMixin, ProjectMixin, SiteMixin,
-                        OrganizationView as OView, ProjectView as PView, SiteView as SView)
 from .filters import KpiAssignedObjectPermissionsFilter
 from .filters import KpiObjectPermissionsFilter
 from .filters import SearchFilter
 from .highlighters import highlight_xform
-from hub.models import SitewideMessage, Organization, Project, Site, ExtraUserDetail, UserRole
+from hub.models import SitewideMessage
 from .models import (
     Collection,
     Asset,
@@ -89,7 +79,6 @@ from .serializers import (
 from .utils.gravatar_url import gravatar_url
 from .utils.ss_structure_to_mdtable import ss_structure_to_mdtable
 from .tasks import import_in_background
-from .mixins import CreateView, UpdateView, DeleteView
 from deployment_backends.backends import DEPLOYMENT_BACKENDS
 
 
@@ -126,130 +115,6 @@ def current_user(request):
 @login_required
 def home(request):
     return TemplateResponse(request, "index.html")
-
-
-@login_required
-def dashboard(request):
-    return TemplateResponse(request, "bcss_dashboard.html")
-
-
-# class OrganizationView(OView):
-class OrganizationView(object):
-    model = Organization
-    success_url = reverse_lazy('organization-list')
-    form_class = OrganizationForm
-
-
-class ProjectView(OView):
-    model = Project
-    success_url = reverse_lazy('project-list')
-    form_class = ProjectForm
-
-
-class SiteView(PView):
-    model = Site
-    success_url = reverse_lazy('site-list')
-    form_class = SiteForm
-
-
-class UserDetailView(object):
-    model = ExtraUserDetail
-    success_url = reverse_lazy('user-list')
-    form_class = RegistrationForm
-
-
-class UserRoleView(object):
-    model = UserRole
-    success_url = reverse_lazy('user-role-list')
-    form_class = UserRoleForm
-
-    
-class OrganizationListView(OrganizationView, LoginRequiredMixin, SuperAdminMixin, ListView):
-    pass
-
-
-class OrganizationCreateView(OrganizationView, LoginRequiredMixin, SuperAdminMixin, CreateView):
-    pass
-
-
-class OrganizationUpdateView(OrganizationView, LoginRequiredMixin, SuperAdminMixin, UpdateView):
-    pass
-
-
-class OrganizationDeleteView(OrganizationView,LoginRequiredMixin, SuperAdminMixin, DeleteView):
-    pass
-
-
-class ProjectListView(ProjectView, LoginRequiredMixin, OrganizationMixin, ListView):
-    pass
-
-
-class ProjectCreateView(ProjectView, LoginRequiredMixin,OrganizationMixin, CreateView):
-    pass
-
-
-class ProjectUpdateView(ProjectView, LoginRequiredMixin, OrganizationMixin, UpdateView):
-    pass
-
-
-class ProjectDeleteView(ProjectView, LoginRequiredMixin, OrganizationMixin, DeleteView):
-    pass
-
-
-class SiteListView(SiteView, LoginRequiredMixin, ProjectMixin, ListView):
-    pass
-
-
-class SiteCreateView(SiteView, LoginRequiredMixin, ProjectMixin, CreateView):
-    pass
-
-
-class SiteUpdateView(SiteView, LoginRequiredMixin, ProjectMixin, UpdateView):
-    pass
-
-
-class SiteDeleteView(SiteView, LoginRequiredMixin, ProjectMixin, DeleteView):
-    pass
-
-
-class UserListView(LoginRequiredMixin, SuperAdminMixin, UserDetailView, ListView):
-    pass
-
-
-class CreateUserView(LoginRequiredMixin, SuperAdminMixin, UserDetailView, RegistrationView):
-    def register(self, request, form, *args, **kwargs):
-        ''' Save all the fields not included in the standard `RegistrationForm`
-        into the JSON `data` field of an `ExtraUserDetail` object '''
-        standard_fields = set(RegistrationForm().fields.keys())
-        extra_fields = set(form.fields.keys()).difference(standard_fields)
-        # Don't save the user unless we successfully store the extra data
-        with transaction.atomic():
-            new_user = super(CreateUserView, self).register(
-                request, form, *args, **kwargs)
-            is_active = form.cleaned_data['is_active']
-            extra_data = {k: form.cleaned_data[k] for k in extra_fields if not k =='is_active'}
-            new_user.extra_details.data.update(extra_data)
-            new_user.extra_details.save()
-            new_user.first_name = request.POST.get('name', '')
-            new_user.is_active = is_active
-            new_user.save()
-        return new_user
-
-
-class UserRoleListView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, ListView):
-    pass
-
-
-class UserRoleCreateView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, CreateView):
-    pass
-
-
-class UserRoleUpdateView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, UpdateView):
-    pass
-
-
-class UserRoleDeleteView(LoginRequiredMixin, SuperAdminMixin, UserRoleView, DeleteView):
-    pass
 
 
 class NoUpdateModelViewSet(

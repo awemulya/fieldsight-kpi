@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from .forms import RegistrationForm
 
 from .views import (
+    dashboard,
     OrganizationListView,
     OrganizationCreateView,
     OrganizationUpdateView,
@@ -27,6 +28,9 @@ from .views import (
 urlpatterns = [
     # group_required('superuser')(OrgView.as_view())
     # dispatch or get_context_data to control only org admin or that orf can actions on its projects and sites.
+    url(r'^$', dashboard, name='dashboard'),
+    url(r'^accounts/create/$', CreateUserView.as_view(
+        form_class=RegistrationForm), name='user-create'),
 
     url(r'^organization/$', OrganizationListView.as_view(), name='organization-list'),
     url(r'^organization/add/$', OrganizationCreateView.as_view(), name='organization-add'),

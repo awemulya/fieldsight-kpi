@@ -1,12 +1,18 @@
 from django.db import transaction
+from django.template.response import TemplateResponse
 from django.views.generic import ListView
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from registration.backends.default.views import RegistrationView
 
 from .mixins import (LoginRequiredMixin, SuperAdminMixin, OrganizationMixin, ProjectMixin,
                      CreateView, UpdateView, DeleteView, OrganizationView as OView, ProjectView as PView)
 from .models import Organization, Project, UserRole, Site, ExtraUserDetail
 from .forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm, RegistrationForm
 
+@login_required
+def dashboard(request):
+    return TemplateResponse(request, "fieldsight/fieldsight_dashboard.html")
 
 class OrganizationView(object):
     model = Organization

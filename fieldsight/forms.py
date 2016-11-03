@@ -4,7 +4,7 @@ from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext_lazy as _
 from registration import forms as registration_forms
 
-from fieldsight.models import Organization, Project, Site, UserRole
+from .models import Organization, Project, Site, UserRole
 
 USERNAME_REGEX = r'^[a-z][a-z0-9_]+$'
 USERNAME_MAX_LENGTH = 30

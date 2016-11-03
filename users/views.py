@@ -9,11 +9,9 @@ from rest_framework import parsers
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from kpi.mixins import CreateView, UpdateView, DeleteView
-from hub.models import UserRole as Role, Project
+from fieldsight.mixins import UpdateView
+from fieldsight.models import UserRole as Role
 from rest_framework import renderers
-from kpi.mixins import group_required
-from users.mixins import OwnProfileRequiredMixin, OwnProfileView
 from users.models import UserProfile
 from users.serializers import AuthCustomTokenSerializer
 from .forms import LoginForm, ProfileForm
@@ -47,7 +45,7 @@ def web_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/dashboard/')
+                    return HttpResponseRedirect('/fieldsight/')
                 else:
                     return render(request, 'registration/login.html', {'form':form, 'inactive':True})
             else:

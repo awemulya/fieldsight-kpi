@@ -8,9 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
-from django.contrib.admin import ModelAdmin
 
-from .helpers import json_from_object
+from kpi.helpers import json_from_object
 
 
 class DeleteView(BaseDeleteView):

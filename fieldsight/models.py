@@ -27,7 +27,6 @@ def create_extra_user_details(sender, instance, created, **kwargs):
 post_save.connect(create_extra_user_details, sender=settings.AUTH_USER_MODEL)
 
 
-
 class Organization(models.Model):
     name = models.CharField(max_length=255)
     address = models.TextField(blank=True, null=True)
