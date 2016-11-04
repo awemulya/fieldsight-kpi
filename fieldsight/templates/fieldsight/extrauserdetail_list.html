@@ -1,11 +1,11 @@
-{% extends "bcss_base.html" %}
+{% extends "fieldsight/fieldsight_base.html" %}
 {% load i18n staticfiles %}
 {% load filters %}
 
 {% block page-title %}{% trans 'Users' %}{% endblock %}
 
 {% block head %}
-    <a class="btn btn-success btn-raised" href="{% url 'user-create' %}">{% trans 'New' %} {% trans 'User' %}</a>
+    <a class="btn btn-success btn-raised" href="{% url 'fieldsight:user-create' %}">{% trans 'New' %} {% trans 'User' %}</a>
 {% endblock %}
 
 {% block content %}

@@ -104,6 +104,7 @@ def current_user(request):
                          'is_staff': user.is_staff,
                          'last_login': user.last_login,
                          'languages': settings.LANGUAGES,
+                         # profile data here, role supervisor
                          }
         if settings.UPCOMING_DOWNTIME:
             # setting is in the format:

@@ -10,37 +10,39 @@ from .mixins import (LoginRequiredMixin, SuperAdminMixin, OrganizationMixin, Pro
 from .models import Organization, Project, UserRole, Site, ExtraUserDetail
 from .forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm, RegistrationForm
 
+
 @login_required
 def dashboard(request):
     return TemplateResponse(request, "fieldsight/fieldsight_dashboard.html")
 
+
 class OrganizationView(object):
     model = Organization
-    success_url = reverse_lazy('organization-list')
+    success_url = reverse_lazy('fieldsight:organization-list')
     form_class = OrganizationForm
 
 
 class ProjectView(OView):
     model = Project
-    success_url = reverse_lazy('project-list')
+    success_url = reverse_lazy('fieldsight:project-list')
     form_class = ProjectForm
 
 
 class SiteView(PView):
     model = Site
-    success_url = reverse_lazy('site-list')
+    success_url = reverse_lazy('fieldsight:site-list')
     form_class = SiteForm
 
 
 class UserDetailView(object):
     model = ExtraUserDetail
-    success_url = reverse_lazy('user-list')
+    success_url = reverse_lazy('fieldsight:user-list')
     form_class = RegistrationForm
 
 
 class UserRoleView(object):
     model = UserRole
-    success_url = reverse_lazy('user-role-list')
+    success_url = reverse_lazy('fieldsight:user-role-list')
     form_class = UserRoleForm
 
 
