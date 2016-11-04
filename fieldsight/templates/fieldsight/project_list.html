@@ -2,10 +2,10 @@
 {% load i18n staticfiles %}
 {% load filters %}
 
-{% block page-title %}{% trans 'Projects' %}{% endblock %}
+{% block page-title %}{% trans 'Projects Under ' %}{{request.organization}}{% endblock %}
 
 {% block head %}
-    <a class="btn btn-success btn-raised" href="{% url 'project-add' %}">{% trans 'New' %} {% trans 'Project' %}</a>
+    <a class="btn btn-success btn-raised" href="{% url 'fieldsight:project-add' %}">{% trans 'New' %} {% trans 'Project' %}</a>
 {% endblock %}
 
 {% block content %}
@@ -33,7 +33,7 @@
             {% for obj in paginated_objects %}
                 <tr>
                     <td>
-                        <a href="{% url 'project-edit' obj.pk %}">{{ obj.name }}</a>
+                        <a href="{% url 'fieldsight:project-edit' obj.pk %}">{{ obj.name }}</a>
                     </td>
                     <td>
                         {{ obj.address }}

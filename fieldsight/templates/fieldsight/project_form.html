@@ -3,7 +3,7 @@
 
 {% block page-title %}{{ scenario }} {% trans 'Project' %}{% endblock %}
 {% block head %}
-    <a class="btn btn-success btn-raised" href="{% url 'project-list' %}">{% trans 'Projects' %}</a>
+    <a class="btn btn-success btn-raised" href="{% url 'fieldsight:project-list' %}">{% trans 'Projects' %}</a>
 {% endblock %}
 <!-- {% block breadcrumbs %}
     <li><a href="{% url 'project-list' %}">{% trans 'Projects' %}</a></li>
@@ -35,7 +35,7 @@
         <!-- <input type="submit" class='btn btn-info btn-raised' value="{% trans 'Save' %}"> -->
         <button class="btn btn-lg btn-primary registration__action" type="submit" >{% trans 'Save' %}</button>
         {% if form.instance.id %}
-            <a href="{% url 'project-delete' form.instance.id %}" class="btn btn-danger btn-raised">{% trans 'Delete' %}</a>
+            <a href="{% url 'fieldsight:project-delete' form.instance.id %}" class="btn btn-danger btn-raised">{% trans 'Delete' %}</a>
         {% endif %}
     </form>
 
