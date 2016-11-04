@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from .forms import RegistrationForm
 
 from .views import (
@@ -7,6 +7,8 @@ from .views import (
     OrganizationCreateView,
     OrganizationUpdateView,
     OrganizationDeleteView,
+    alter_org_status,
+    add_org_admin,
     ProjectListView,
     ProjectCreateView,
     ProjectUpdateView,
@@ -37,6 +39,8 @@ urlpatterns = [
     url(r'^organization/(?P<pk>[0-9]+)/$', OrganizationUpdateView.as_view(), name='organization-edit'),
     # url(r'^organization/search/$', organization_search, name='search-org'),
     url(r'^organization/delete/(?P<pk>\d+)/$', OrganizationDeleteView.as_view(), name='organization-delete'),
+    url(r'^organization/alter-status/(?P<pk>\d+)/$', alter_org_status, name='alter_org_status'),
+    url(r'^organization/add-org-admin/(?P<pk>\d+)/$', add_org_admin, name='add_org_admin'),
 
     url(r'^project/$', ProjectListView.as_view(), name='project-list'),
     url(r'^project/add/$', ProjectCreateView.as_view(), name='project-add'),

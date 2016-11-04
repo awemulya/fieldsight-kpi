@@ -4,6 +4,7 @@ from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext_lazy as _
 from registration import forms as registration_forms
 
+from django.conf import settings
 from .models import Organization, Project, Site, UserRole
 
 USERNAME_REGEX = r'^[a-z][a-z0-9_]+$'
@@ -59,6 +60,23 @@ class OrganizationForm(forms.ModelForm):
         model = Organization
         exclude = []
         # exclude = ['organizaton']
+
+
+class SetOrgAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SetOrgAdminForm, self).__init__(*args, **kwargs)
+        org = kwargs.get('instance')
+        if org is not None:
+            old_admins = org.get_staffs_id
+            users = User.objects.filter().exclude(id=settings.ANONYMOUS_USER_ID).exclude(id__in=old_admins)
+            self.fields['user'].choices = [(user.pk, user.username) for user in users]
+
+    class Meta:
+        fields = ['user']
+        model = UserRole
+        widgets = {
+        'users': forms.CheckboxSelectMultiple()
+        }
 
 
 class ProjectForm(forms.ModelForm):

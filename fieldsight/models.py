@@ -75,7 +75,14 @@ class Organization(models.Model):
         staffs =  list(self.organization_roles.filter(group__name="Organization Admin"))
         if staffs:
             return [str(role.user.username) for role in staffs]
-        return ""
+        return ""\
+
+    @property
+    def get_staffs_id(self):
+        staffs =  list(self.organization_roles.filter(group__name="Organization Admin"))
+        if staffs:
+            return [role.user.id for role in staffs]
+        return []
 
 
 class Project(models.Model):

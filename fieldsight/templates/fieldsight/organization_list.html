@@ -25,7 +25,7 @@
 
         <table class="table table-striped" id="dynamic-table1">
             <thead>
-            <th>Name</th>
+            <th>{% anchor name _('Name') %}</th>
             <th>{% anchor country _('Country') %}</th>
             <th>{% anchor address _('Address') %}</th>
             <th>{% anchor phone _('Phone') %}</th>
@@ -56,10 +56,16 @@
                         {{ obj.website }}
                     </td>
                     <td>
-                        {{ obj.get_staffs }}
+                        {{ obj.get_staffs }}<a class="fa fa-plus" title="Add organization Admin"
+                                               href="{% url 'fieldsight:add_org_admin' pk=obj.id %}"></a>
                     </td>
                     <td>
                         {{ obj.is_active|activeness }}
+                    </td>
+                     <td>
+                        <a class="btn btn-success btn-raised" href="{% url 'fieldsight:alter_org_status' pk=obj.id %}">
+                            <!--later with js framework ko in some and angular in some-->
+                            {{ obj.is_active|alter_status }} {% trans 'Org' %}</a>
                     </td>
                 </tr>
             {% endfor %}
