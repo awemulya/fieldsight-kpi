@@ -9,6 +9,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
+from kobo_playground.static_lists import COUNTRIES
 
 
 class ExtraUserDetail(models.Model):
@@ -27,14 +28,25 @@ def create_extra_user_details(sender, instance, created, **kwargs):
 post_save.connect(create_extra_user_details, sender=settings.AUTH_USER_MODEL)
 
 
+class OrganizationType(models.Model):
+    name = models.CharField("Organization Type", max_length=256)
+
+    def __unicode__(self):
+        return u'{}'.format(self.name)
+
+
 class Organization(models.Model):
     name = models.CharField(max_length=255)
+    country = models.CharField(max_length=3, choices=COUNTRIES, default=u'NPL')
+    type = models.ForeignKey(OrganizationType, verbose_name='Type of Organization')
+    public_desc = models.TextField("Public Description", blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     location = PointField(geography=True, srid=4326, blank=True, null=True)
     phone = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     fax = models.CharField(max_length=255, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
+    additional_desc = models.TextField("Additional Description", blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
@@ -57,6 +69,13 @@ class Organization(models.Model):
 
     def get_absolute_url(self):
         return reverse('organization-detail', kwargs={'pk': self.pk})
+
+    @property
+    def get_staffs(self):
+        staffs =  list(self.organization_roles.filter(group__name="Organization Admin"))
+        if staffs:
+            return [str(role.user.username) for role in staffs]
+        return ""
 
 
 class Project(models.Model):

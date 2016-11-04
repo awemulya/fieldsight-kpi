@@ -53,6 +53,7 @@ class OrganizationForm(forms.ModelForm):
         super(OrganizationForm, self).__init__(*args, **kwargs)
         if not self.fields['location'].initial:
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
+        self.fields['type'].empty_label = None
 
     class Meta:
         model = Organization
