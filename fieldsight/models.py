@@ -139,6 +139,9 @@ class Project(models.Model):
 
 class Site(models.Model):
     name = models.CharField(max_length=255)
+    type = models.ForeignKey(ProjectType, verbose_name='Type of Site')
+    public_desc = models.TextField("Public Description", blank=True, null=True)
+    additional_desc = models.TextField("Additional Description", blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     location = PointField(geography=True, srid=4326, blank=True, null=True)
     phone = models.CharField(max_length=255, blank=True, null=True)
@@ -159,6 +162,34 @@ class Site(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_central_eng(self):
+        staffs = list(self.site_roles.filter(group__name="Central Engineer"))
+        if staffs:
+            return [str(role.user.username) for role in staffs]
+        return ""\
+
+    @property
+    def get_central_eng_id(self):
+        staffs = list(self.site_roles.filter(group__name="Central Engineer"))
+        if staffs:
+            return [role.user.id for role in staffs]
+        return []
+
+    @property
+    def get_supervisors(self):
+        staffs = list(self.site_roles.filter(group__name="Site Supervisor"))
+        if staffs:
+            return [str(role.user.username) for role in staffs]
+        return ""\
+
+    @property
+    def get_supervisor_id(self):
+        staffs = list(self.site_roles.filter(group__name="Site Supervisor"))
+        if staffs:
+            return [role.user.id for role in staffs]
+        return []
 
 
 class UserRole(models.Model):
