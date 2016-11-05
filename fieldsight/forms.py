@@ -79,11 +79,29 @@ class SetOrgAdminForm(forms.ModelForm):
         }
 
 
+class SetProjectManagerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SetProjectManagerForm, self).__init__(*args, **kwargs)
+        org = kwargs.get('instance')
+        if org is not None:
+            old_pm = org.get_staffs_id
+            users = User.objects.filter().exclude(id=settings.ANONYMOUS_USER_ID).exclude(id__in=old_pm)
+            self.fields['user'].choices = [(user.pk, user.username) for user in users]
+
+    class Meta:
+        fields = ['user']
+        model = UserRole
+        widgets = {
+        'users': forms.CheckboxSelectMultiple()
+        }
+
+
 class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         if not self.fields['location'].initial:
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
+        self.fields['type'].empty_label = None
 
     class Meta:
         model = Project
@@ -102,6 +120,10 @@ class SiteForm(forms.ModelForm):
 
 
 class UserRoleForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserRoleForm, self).__init__(*args, **kwargs)
+        self.fields['group'].empty_label = None
+        self.fields['user'].empty_label = None
 
     class Meta:
         model = UserRole

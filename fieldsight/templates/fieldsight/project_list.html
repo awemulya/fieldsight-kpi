@@ -27,6 +27,7 @@
             <th>{% anchor email _('Email') %}</th>
             <th>{% anchor fax _('Fax') %}</th>
             <th>{% anchor website _('Website') %}</th>
+            <th>{% trans 'Projects Managers ' %}</th>
             <th>{% anchor is_active _('Status') %}</th>
             </thead>
             <tbody>
@@ -51,7 +52,16 @@
                         {{ obj.website }}
                     </td>
                     <td>
+                        {{ obj.get_staffs }}<a class="fa fa-plus" title="Add organization Admin"
+                                               href="{% url 'fieldsight:add_proj_manager' pk=obj.id %}"></a>
+                    </td>
+                    <td>
                         {{ obj.is_active|activeness }}
+                    </td>
+                     <td>
+                        <a class="btn btn-success btn-raised" href="{% url 'fieldsight:alter_proj_status' pk=obj.id %}">
+                            <!--later with js framework ko in some and angular in some-->
+                            {{ obj.is_active|alter_status }} {% trans 'Project' %}</a>
                     </td>
                 </tr>
             {% endfor %}

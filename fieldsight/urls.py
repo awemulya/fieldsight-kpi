@@ -13,6 +13,8 @@ from .views import (
     ProjectCreateView,
     ProjectUpdateView,
     ProjectDeleteView,
+    alter_proj_status,
+    add_proj_manager,
     SiteListView,
     SiteCreateView,
     SiteUpdateView,
@@ -47,6 +49,9 @@ urlpatterns = [
     url(r'^project/(?P<pk>[0-9]+)/$', ProjectUpdateView.as_view(), name='project-edit'),
     # url(r'^organization/search/$', organization_search, name='search-org'),
     url(r'^project/delete/(?P<pk>\d+)/$', ProjectDeleteView.as_view(), name='project-delete'),
+    url(r'^project/alter-status/(?P<pk>\d+)/$', alter_proj_status, name='alter_proj_status'),
+    url(r'^project/add-proj-admin/(?P<pk>\d+)/$', add_proj_manager, name='add_proj_manager'),
+
 
     url(r'^site/$', SiteListView.as_view(), name='site-list'),
     url(r'^site/add/$', SiteCreateView.as_view(), name='site-add'),

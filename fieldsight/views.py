@@ -10,9 +10,11 @@ from django.contrib.auth.decorators import login_required
 from registration.backends.default.views import RegistrationView
 
 from .mixins import (LoginRequiredMixin, SuperAdminMixin, OrganizationMixin, ProjectMixin,
-                     CreateView, UpdateView, DeleteView, OrganizationView as OView, ProjectView as PView)
+                     CreateView, UpdateView, DeleteView, OrganizationView as OView, ProjectView as PView,
+                     group_required)
 from .models import Organization, Project, UserRole, Site, ExtraUserDetail
-from .forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm, RegistrationForm, SetOrgAdminForm
+from .forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm, RegistrationForm, SetOrgAdminForm, \
+    SetProjectManagerForm
 
 
 @login_required
@@ -66,6 +68,7 @@ class OrganizationDeleteView(OrganizationView,LoginRequiredMixin, SuperAdminMixi
     pass
 
 @login_required
+@group_required('admin')
 def alter_org_status(request, pk):
     try:
         obj = Organization.objects.get(pk=int(pk))
@@ -78,11 +81,12 @@ def alter_org_status(request, pk):
             messages.info(request, 'Organization {0} Activated.'.format(obj.name))
         obj.save()
     except:
-        messages.info(request, 'User {0} not found.'.format(obj.name))
+        messages.info(request, 'Organization {0} not found.'.format(obj.name))
     return HttpResponseRedirect(reverse('fieldsight:organization-list'))
 
 
 @login_required
+@group_required('admin')
 def add_org_admin(request, pk):
     obj = get_object_or_404(
         Organization, pk=int(pk))
@@ -90,13 +94,49 @@ def add_org_admin(request, pk):
         form = SetOrgAdminForm(request.POST)
         user = int(form.data.get('user'))
         group = Group.objects.get(name__exact="Organization Admin")
-        role = UserRole(user_id=user,group=group,organization=obj)
+        role = UserRole(user_id=user, group=group, project=obj)
         role.save()
         messages.add_message(request, messages.INFO, 'Organization Admin Added')
         return HttpResponseRedirect(reverse('fieldsight:organization-list'))
     else:
         form = SetOrgAdminForm(instance=obj)
     return render(request, "fieldsight/add_admin.html", {'obj':obj,'form':form})
+
+
+@login_required
+@group_required('Organization')
+def alter_proj_status(request, pk):
+    try:
+        obj = Project.objects.get(pk=int(pk))
+            # alter status method on custom user
+        if obj.is_active:
+            obj.is_active = False
+            messages.info(request, 'Project {0} Deactivated.'.format(obj.name))
+        else:
+            obj.is_active = True
+            messages.info(request, 'Project {0} Activated.'.format(obj.name))
+        obj.save()
+    except:
+        messages.info(request, 'Project {0} not found.'.format(obj.name))
+    return HttpResponseRedirect(reverse('fieldsight:project-list'))
+
+
+@login_required
+@group_required('Organization')
+def add_proj_manager(request, pk):
+    obj = get_object_or_404(
+        Project, pk=int(pk))
+    if request.method == 'POST':
+        form = SetProjectManagerForm(request.POST)
+        user = int(form.data.get('user'))
+        group = Group.objects.get(name__exact="Project Manager")
+        role = UserRole(user_id=user,group=group,project=obj)
+        role.save()
+        messages.add_message(request, messages.INFO, 'Project Manager Added')
+        return HttpResponseRedirect(reverse('fieldsight:project-list'))
+    else:
+        form = SetProjectManagerForm(instance=obj)
+    return render(request, "fieldsight/add_project_manager.html", {'obj':obj,'form':form})
 
 
 class ProjectListView(ProjectView, LoginRequiredMixin, OrganizationMixin, ListView):
