@@ -94,7 +94,7 @@ def add_org_admin(request, pk):
         form = SetOrgAdminForm(request.POST)
         user = int(form.data.get('user'))
         group = Group.objects.get(name__exact="Organization Admin")
-        role = UserRole(user_id=user, group=group, project=obj)
+        role = UserRole(user_id=user, group=group, organization=obj)
         role.save()
         messages.add_message(request, messages.INFO, 'Organization Admin Added')
         return HttpResponseRedirect(reverse('fieldsight:organization-list'))
