@@ -247,7 +247,9 @@ var Drawer = React.createClass({
             <nav className='k-drawer__icons'>
               <DrawerLink label={t('Forms')} linkto='forms' ki-icon='projects' />
               <DrawerLink label={t('Form Library')} linkto='library' ki-icon='library' />
-              <DrawerLink label={t('Dashboard')} href='fieldsight' fa-icon='dashboard' />
+              { stores.session.currentAccount ?
+                  <DrawerLink label={t('Dashboard')} href={stores.session.currentAccount.kobocat_url} fa-icon='dashboard' />
+              : null }
               { stores.session.currentAccount ?
                   <DrawerLink label={t('Deployed Forms')} active='true' href={stores.session.currentAccount.projects_url} className="is-edge" ki-icon='globe' />
               : null }

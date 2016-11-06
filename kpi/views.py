@@ -99,6 +99,8 @@ def current_user(request):
                          'server_time': datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
                          'projects_url': '/'.join((
                             settings.KOBOCAT_URL, user.username)),
+                         'kobocat_url': '/'.join((
+                            settings.KOBOCAT_URL, "fieldsight")),
                          'is_superuser': user.is_superuser,
                          'gravatar': gravatar_url(user.email),
                          'is_staff': user.is_staff,
