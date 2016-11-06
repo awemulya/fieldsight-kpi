@@ -96,6 +96,40 @@ class SetProjectManagerForm(forms.ModelForm):
         }
 
 
+class SetSupervisorForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SetSupervisorForm, self).__init__(*args, **kwargs)
+        org = kwargs.get('instance')
+        if org is not None:
+            old_pm = org.get_supervisor_id
+            users = User.objects.filter().exclude(id=settings.ANONYMOUS_USER_ID).exclude(id__in=old_pm)
+            self.fields['user'].choices = [(user.pk, user.username) for user in users]
+
+    class Meta:
+        fields = ['user']
+        model = UserRole
+        widgets = {
+        'users': forms.CheckboxSelectMultiple()
+        }
+
+
+class SetCentralEngForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SetCentralEngForm, self).__init__(*args, **kwargs)
+        org = kwargs.get('instance')
+        if org is not None:
+            old_pm = org.get_central_eng_id
+            users = User.objects.filter().exclude(id=settings.ANONYMOUS_USER_ID).exclude(id__in=old_pm)
+            self.fields['user'].choices = [(user.pk, user.username) for user in users]
+
+    class Meta:
+        fields = ['user']
+        model = UserRole
+        widgets = {
+        'users': forms.CheckboxSelectMultiple()
+        }
+
+
 class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
@@ -113,6 +147,7 @@ class SiteForm(forms.ModelForm):
         super(SiteForm, self).__init__(*args, **kwargs)
         if not self.fields['location'].initial:
             self.fields['location'].initial = Point(85.3240, 27.7172,srid=4326)
+        self.fields['type'].empty_label = None
 
     class Meta:
         model = Site

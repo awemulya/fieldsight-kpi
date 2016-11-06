@@ -14,7 +14,7 @@ from .mixins import (LoginRequiredMixin, SuperAdminMixin, OrganizationMixin, Pro
                      group_required)
 from .models import Organization, Project, UserRole, Site, ExtraUserDetail
 from .forms import OrganizationForm, ProjectForm, SiteForm, UserRoleForm, RegistrationForm, SetOrgAdminForm, \
-    SetProjectManagerForm
+    SetProjectManagerForm, SetSupervisorForm, SetCentralEngForm
 
 
 @login_required
@@ -137,6 +137,60 @@ def add_proj_manager(request, pk):
     else:
         form = SetProjectManagerForm(instance=obj)
     return render(request, "fieldsight/add_project_manager.html", {'obj':obj,'form':form})
+
+
+@login_required
+@group_required('Project')
+def alter_site_status(request, pk):
+    try:
+        obj = Site.objects.get(pk=int(pk))
+            # alter status method on custom user
+        if obj.is_active:
+            obj.is_active = False
+            messages.info(request, 'Site {0} Deactivated.'.format(obj.name))
+        else:
+            obj.is_active = True
+            messages.info(request, 'Site {0} Activated.'.format(obj.name))
+        obj.save()
+    except:
+        messages.info(request, 'Site {0} not found.'.format(obj.name))
+    return HttpResponseRedirect(reverse('fieldsight:site-list'))
+
+
+@login_required
+@group_required('Project')
+def add_supervisor(request, pk):
+    obj = get_object_or_404(
+        Site, pk=int(pk))
+    if request.method == 'POST':
+        form = SetSupervisorForm(request.POST)
+        user = int(form.data.get('user'))
+        group = Group.objects.get(name__exact="Site Supervisor")
+        role = UserRole(user_id=user,group=group,site=obj)
+        role.save()
+        messages.add_message(request, messages.INFO, 'Site Supervisor Added')
+        return HttpResponseRedirect(reverse('fieldsight:site-list'))
+    else:
+        form = SetSupervisorForm(instance=obj)
+    return render(request, "fieldsight/add_supervisor.html", {'obj':obj,'form':form})
+
+
+@login_required
+@group_required('Project')
+def add_central_engineer(request, pk):
+    obj = get_object_or_404(
+        Site, pk=int(pk))
+    if request.method == 'POST':
+        form = SetCentralEngForm(request.POST)
+        user = int(form.data.get('user'))
+        group = Group.objects.get(name__exact="Central Engineer")
+        role = UserRole(user_id=user,group=group,site=obj)
+        role.save()
+        messages.add_message(request, messages.INFO, 'Central Engineer')
+        return HttpResponseRedirect(reverse('fieldsight:site-list'))
+    else:
+        form = SetCentralEngForm(instance=obj)
+    return render(request, "fieldsight/add_central_engineer.html", {'obj':obj,'form':form})
 
 
 class ProjectListView(ProjectView, LoginRequiredMixin, OrganizationMixin, ListView):
