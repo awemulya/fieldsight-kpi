@@ -40,7 +40,6 @@ TEMPLATE_DEBUG = (os.environ.get('TEMPLATE_DEBUG', 'True') == 'True')
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(' ')
 
-LOGIN_REDIRECT_URL = '/fieldsight/'
 LOGIN_URL = '/users/login'
 
 # Application definition
@@ -61,7 +60,6 @@ INSTALLED_APPS = (
     'kpi.apps.KpiConfig',
     'hub',
     'users',
-    'fieldsight',
     'webpack_loader',
     'registration', # Must come AFTER kpi
     'django.contrib.admin', # Must come AFTER registration
@@ -72,8 +70,6 @@ INSTALLED_APPS = (
     'oauth2_provider',
     'markitup',
     'django.contrib.gis',
-    'linaro_django_pagination',
-    'webstack_django_sorting',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,10 +84,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'hub.middleware.OtherFormBuilderRedirectMiddleware',
-    'linaro_django_pagination.middleware.PaginationMiddleware',
-    'webstack_django_sorting.middleware.SortingMiddleware',
     # 'users.middleware.EmailModelBackend',
-    'users.middleware.RoleMiddleware',
 )
 
 # used in kpi.models.sitewide_messages

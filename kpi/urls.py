@@ -54,7 +54,7 @@ urlpatterns = [
     # url(r'^accounts/register/$', ExtraDetailRegistrationView.as_view(
     #     form_class=RegistrationForm), name='registration_register'),
     url(r'^accounts/logout/', 'django.contrib.auth.views.logout',
-        {'next_page': '/fieldsight'}, name='auth_logout'),
+        {'next_page': '/'}, name='auth_logout'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(
