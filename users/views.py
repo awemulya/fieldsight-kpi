@@ -45,7 +45,7 @@ def web_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/fieldsight/')
+                    return HttpResponseRedirect(reverse('kobocat'))
                 else:
                     return render(request, 'registration/login.html', {'form':form, 'inactive':True})
             else:
