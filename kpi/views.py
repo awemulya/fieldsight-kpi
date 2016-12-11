@@ -533,7 +533,9 @@ class AssetSnapshotViewSet(NoUpdateModelViewSet):
 def change_redirect_to_form_assign(data):
     identifier = data.get('identifier','')
     if identifier:
-        data['identifier'] = identifier.replace('forms', 'assign')
+        url_list = data['identifier'].split("/")[:3]+["forms"]
+        data['identifier'] =  "/".join(url_list)
+
     return data
 
 
