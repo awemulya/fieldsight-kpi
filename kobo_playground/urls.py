@@ -8,7 +8,7 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^users/', include('users.urls', namespace='users')),
+    # url(r'^users/', include('users.urls', namespace='users')),
     url(r'^', include('kpi.urls')),
     url(r'kobocat/', RedirectView.as_view(url=settings.KOBOCAT_URL, permanent=True),name='kobocat'),
 ]

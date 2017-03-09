@@ -20,6 +20,7 @@ from kpi.views import (
 from kpi.views import current_user, home, one_time_login
 from kpi.views import authorized_application_authenticate_user
 from hub.views import switch_builder
+from users.views import web_login
 
 router = DefaultRouter()
 router.register(r'assets', AssetViewSet)
@@ -48,6 +49,7 @@ js_info_dict = {
 urlpatterns = [
     url(r'^$', home, name='kpi-root'),
     url(r'^me/$', current_user, name='current-user'),
+    url(r'^users/login/', web_login, name='web_login'),
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
