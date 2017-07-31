@@ -719,7 +719,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        exclude = ('user_permissions',)
+        # exclude = ('user_permissions',)
         fields = ('url',
                   'username',
                   'assets',

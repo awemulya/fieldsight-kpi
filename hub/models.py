@@ -1,9 +1,3 @@
-from datetime import datetime
-from django.contrib.auth.models import Group
-from django.contrib.gis.db.models import PointField
-from django.contrib.gis.db.models import GeoManager
-from django.core.urlresolvers import reverse
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.conf import settings
 from markitup.fields import MarkupField
@@ -22,7 +16,7 @@ class FormBuilderPreference(models.Model):
     DKOBO = 'D'
     BUILDER_CHOICES = (
         (KPI, 'kpi'),
-        (DKOBO, 'dkobo')
+        (DKOBO, 'dkobo') # used for hub feature from dkobo
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     preferred_builder = models.CharField(
