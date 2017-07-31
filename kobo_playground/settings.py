@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'haystack',
     'kpi.apps.KpiConfig',
     'hub',
-    'users',
+    # 'users',
     'webpack_loader',
     'registration', # Must come AFTER kpi
     'django.contrib.admin', # Must come AFTER registration

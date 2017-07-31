@@ -245,14 +245,10 @@ var Drawer = React.createClass({
     return (
           <bem.Drawer className='k-drawer mdl-shadow--2dp'>
             <nav className='k-drawer__icons'>
-              <DrawerLink label={t('Forms')} linkto='forms' ki-icon='projects' />
-              <DrawerLink label={t('Form Library')} linkto='library' ki-icon='library' />
               { stores.session.currentAccount ?
                   <DrawerLink label={t('Dashboard')} href={stores.session.currentAccount.kobocat_url} fa-icon='dashboard' />
               : null }
-              { stores.session.currentAccount ?
-                  <DrawerLink label={t('Deployed Forms')} active='true' href={stores.session.currentAccount.projects_url} className="is-edge" ki-icon='globe' />
-              : null }
+
               <div className="mdl-layout-spacer"></div>
 
            
