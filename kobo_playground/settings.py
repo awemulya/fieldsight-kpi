@@ -198,6 +198,7 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'kpi.context_processors.email',
     'kpi.context_processors.git_commit',
     'kpi.context_processors.sitewide_messages',
+    'kpi.context_processors.auth_password_reset_url',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',

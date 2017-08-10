@@ -36,3 +36,7 @@ def sitewide_messages(request):
         except SitewideMessage.DoesNotExist as e:
             return {}
     return {}
+
+
+def auth_password_reset_url(request):
+    return { 'auth_password_reset': settings.FORGOT_PASSWORD_URL }
