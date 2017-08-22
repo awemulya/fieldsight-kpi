@@ -316,9 +316,10 @@ actions.resources.updateAsset.listen(function(uid, values){
   return new Promise(function(resolve, reject){
     dataInterface.patchAsset(uid, values)
       .done(function(asset){
-        actions.resources.updateAsset.completed(asset);
-        notify(t('successfully updated'));
-        resolve(asset);
+      //dataInterface.deployAsset(asset, true);
+        actions.resources.deployAsset(asset, true);
+        //notify(t('successfully updated'));
+        //resolve(asset);
       })
       .fail(function(...args){
         reject(args)

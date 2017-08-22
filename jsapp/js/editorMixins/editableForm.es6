@@ -381,10 +381,10 @@ export default assign({
     } else {
       // update existing
       var assetId = this.props.params.assetid;
-      actions.resources.updateAsset(assetId, params)
-        .then(() => {
-          this.saveFormComplete();
-        });
+      actions.resources.updateAsset(assetId, params);
+        //.then(() => {
+        //  this.saveFormComplete();
+       // });
     }
     this.setState({
       asset_updated: update_states.PENDING_UPDATE,
