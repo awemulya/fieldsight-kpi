@@ -375,7 +375,8 @@ export default assign({
       params.asset_type = this.isLibrary() ? 'block' : 'survey';
       actions.resources.createResource(params)
         .then((asset) => {
-          this.transitionTo('form-edit', {assetid: asset.uid});
+          //this.transitionTo('form-edit', {assetid: asset.uid});
+          actions.resources.deployAsset(asset);
         })
     } else {
       // update existing
@@ -434,9 +435,9 @@ export default assign({
       ooo.styleValue = this.state.settings__style;
     }
     if (this.editorState === 'new') {
-      ooo.saveButtonText = t('create');
+      ooo.saveButtonText = t('create and Deploy');
     } else {
-      ooo.saveButtonText = t('save');
+      ooo.saveButtonText = t('ReDeploy');
     }
     return ooo;
   },
@@ -692,7 +693,7 @@ export default assign({
   render () {
     var isSurvey = this.app && !this.isLibrary();
     return (
-        <DocumentTitle title={this.state.name || t('Untitled')}>
+        <DocumentTitle title={this.state.name || t('New Form')}>
           <ui.Panel m={'transparent'}>
             <bem.FormBuilder m={this.state.formStylePanelDisplayed ? 'formStyleDisplayed': null }>
               {this.renderSaveAndPreviewButtons()}

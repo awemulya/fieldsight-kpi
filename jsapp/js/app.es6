@@ -824,7 +824,7 @@ var App = React.createClass({
               'asset-nav-present': this.state.assetNavPresent,
               'asset-nav-open': this.state.assetNavIsOpen && this.state.assetNavPresent,
               'fixed-drawer': this.state.showFixedDrawer,
-              'formbuilder-focus': this.state.formBuilderFocus,
+                  'formbuilder-focus': this.state.formBuilderFocus,
                 }} className="mdl-layout mdl-layout--fixed-header">
               { this.state.modalMessage ?
                 <ui.Modal open small onClose={()=>{stores.pageState.hideModal()}} icon={this.state.modalIcon}>

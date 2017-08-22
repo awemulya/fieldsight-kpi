@@ -135,28 +135,6 @@ var MainHeader = React.createClass({
               <img src={gravatar} />
             </bem.AccountBox__image>
             <ul className="k-account__menu">
-              <li key="settings">
-                <a href={stores.session.currentAccount.projects_url + '/settings'} className="mdl-menu__item">
-                  <i className="k-icon-settings" />
-                  {t('Profile Settings')}
-                </a>
-              </li>
-              {leaveBetaUrl ?
-                <li>
-                  <a href={leaveBetaUrl} className="mdl-menu__item">
-                    {t('leave beta')}
-                  </a>
-                </li>
-              :null}
-              <li className="k-lang__submenu" key="lang">
-                <a className="mdl-menu__item">
-                  <i className="fa fa-globe" />
-                  {t('Language')}
-                </a>
-                <ul>
-                  {langs.map(this.renderLangItem)}
-                </ul>
-              </li>
               <li key="logout">
                 <a onClick={this.logout} className="mdl-menu__item">
                   <i className="k-icon-logout" /> 
