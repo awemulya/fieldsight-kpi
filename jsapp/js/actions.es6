@@ -407,6 +407,9 @@ actions.resources.createResource.listen(function(details){
     dataInterface.createResource(details)
       .done(function(asset){
         actions.resources.createResource.completed(asset);
+       // window.setTimeout(function(){
+    //redirectTo(data.identifier);
+  //}, 500);
         resolve(asset);
       })
       .fail(function(...args){

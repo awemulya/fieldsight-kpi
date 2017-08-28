@@ -376,7 +376,10 @@ export default assign({
       actions.resources.createResource(params)
         .then((asset) => {
           //this.transitionTo('form-edit', {assetid: asset.uid});
-          actions.resources.deployAsset(asset);
+          window.setTimeout(function(){
+            actions.resources.deployAsset(asset);
+            }, 500);
+
         })
     } else {
       // update existing
