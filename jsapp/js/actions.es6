@@ -406,10 +406,11 @@ actions.resources.createResource.listen(function(details){
   return new Promise(function(resolve, reject){
     dataInterface.createResource(details)
       .done(function(asset){
+      alertify.alert(t('form saved'));
         //actions.resources.createResource.completed(asset);
         window.setTimeout(function(){
     actions.resources.deployAsset(asset);
-  }, 500);
+  }, 2000);
         //resolve(asset);
       })
       .fail(function(...args){
