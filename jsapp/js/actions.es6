@@ -406,11 +406,11 @@ actions.resources.createResource.listen(function(details){
   return new Promise(function(resolve, reject){
     dataInterface.createResource(details)
       .done(function(asset){
-        actions.resources.createResource.completed(asset);
-       // window.setTimeout(function(){
-    //redirectTo(data.identifier);
-  //}, 500);
-        resolve(asset);
+        //actions.resources.createResource.completed(asset);
+        window.setTimeout(function(){
+    actions.resources.deployAsset(asset);
+  }, 500);
+        //resolve(asset);
       })
       .fail(function(...args){
         actions.resources.createResource.failed(...args)
