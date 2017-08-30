@@ -438,9 +438,9 @@ export default assign({
       ooo.styleValue = this.state.settings__style;
     }
     if (this.editorState === 'new') {
-      ooo.saveButtonText = t('create and Deploy');
+      ooo.saveButtonText = t('Save and Exit');
     } else {
-      ooo.saveButtonText = t('ReDeploy');
+      ooo.saveButtonText = t('Save and Exit');
     }
     return ooo;
   },
