@@ -393,6 +393,38 @@ export default assign({
       asset_updated: update_states.PENDING_UPDATE,
     });
   },
+  saveOnlyForm (evt) {
+    if (evt && evt.preventDefault) {
+      evt.preventDefault();
+    }
+
+    if (this.state.settings__style !== undefined) {
+      this.app.survey.settings.set('style', this.state.settings__style);
+    }
+    var params = {
+      content: surveyToValidJson(this.app.survey),
+    };
+    if (this.state.name) {
+      params.name = this.state.name;
+    }
+    if (this.editorState === 'new') {
+      params.asset_type = this.isLibrary() ? 'block' : 'survey';
+      actions.resources.createResource(params)
+        .then((asset) => {
+          this.transitionTo('form-edit', {assetid: asset.uid});
+        })
+    } else {
+      // update existing
+      var assetId = this.props.params.assetid;
+      actions.resources.updateAsset(assetId, params)
+        .then(() => {
+          this.saveFormComplete();
+        });
+    }
+    this.setState({
+      asset_updated: update_states.PENDING_UPDATE,
+    });
+  },
   saveFormComplete () {
     this.unpreventClosingTab();
     this.setState({
@@ -439,8 +471,10 @@ export default assign({
     }
     if (this.editorState === 'new') {
       ooo.saveButtonText = t('Save and Exit');
+      ooo.saveOnlyButtonText = t('Save');
     } else {
       ooo.saveButtonText = t('Save and Exit');
+      ooo.saveOnlyButtonText = t('Save');
     }
     return ooo;
   },
@@ -458,6 +492,7 @@ export default assign({
       hasSettings,
       styleValue,
       saveButtonText,
+      saveOnlyButtonText,
     } = this.buttonStates();
 
     return (
@@ -489,6 +524,15 @@ export default assign({
                   disabled={!this.state.surveyAppRendered || !!this.state.surveyLoadError}>
                 <i />
                 {saveButtonText}
+              </bem.FormBuilderHeader__button>
+              <bem.FormBuilderHeader__button m={['save', {
+                    savepending: this.state.asset_updated === update_states.PENDING_UPDATE,
+                    savecomplete: this.state.asset_updated === update_states.UP_TO_DATE,
+                    saveneeded: this.state.asset_updated === update_states.UNSAVED_CHANGES,
+                  }]} onClick={this.saveOnlyForm} className="disabled"
+                  disabled={!this.state.surveyAppRendered || !!this.state.surveyLoadError}>
+                <i />
+                {saveOnlyButtonText}
               </bem.FormBuilderHeader__button>
             </bem.FormBuilderHeader__cell>
             <bem.FormBuilderHeader__cell m={'close'} >
