@@ -208,7 +208,19 @@ actions.resources = Reflux.createActions({
       'failed'
     ]
   },
+  createOnlyResource: {
+    children: [
+      'completed',
+      'failed'
+    ]
+  },
   updateAsset: {
+    children: [
+      'completed',
+      'failed'
+    ]
+  },
+  updateOnlyAsset: {
     children: [
       'completed',
       'failed'
@@ -292,6 +304,10 @@ actions.resources.createResource.failed.listen(function(){
   log('createResourceFailed');
 });
 
+actions.resources.createOnlyResource.failed.listen(function(){
+  log('createOnlyResourceFailed');
+});
+
 actions.resources.createSnapshot.listen(function(details){
   dataInterface.createAssetSnapshot(details)
     .done(actions.resources.createSnapshot.completed)
@@ -320,6 +336,20 @@ actions.resources.updateAsset.listen(function(uid, values){
         actions.resources.deployAsset(asset, true);
         //notify(t('successfully updated'));
         //resolve(asset);
+      })
+      .fail(function(...args){
+        reject(args)
+      });
+  })
+});
+
+actions.resources.updateOnlyAsset.listen(function(uid, values){
+  return new Promise(function(resolve, reject){
+    dataInterface.patchAsset(uid, values)
+      .done(function(asset){
+        actions.resources.updateOnlyAsset.completed(asset);
+        notify(t('successfully updated'));
+        resolve(asset);
       })
       .fail(function(...args){
         reject(args)
@@ -415,6 +445,21 @@ actions.resources.createResource.listen(function(details){
       })
       .fail(function(...args){
         actions.resources.createResource.failed(...args)
+        reject(args);
+      });
+  });
+});
+
+
+actions.resources.createOnlyResource.listen(function(details){
+  return new Promise(function(resolve, reject){
+    dataInterface.createResource(details)
+      .done(function(asset){
+        actions.resources.createOnlyResource.completed(asset);
+        resolve(asset);
+      })
+      .fail(function(...args){
+        actions.resources.createOnlyResource.failed(...args)
         reject(args);
       });
   });

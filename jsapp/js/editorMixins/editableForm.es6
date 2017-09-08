@@ -409,14 +409,14 @@ export default assign({
     }
     if (this.editorState === 'new') {
       params.asset_type = this.isLibrary() ? 'block' : 'survey';
-      actions.resources.createResource(params)
+      actions.resources.createOnlyResource(params)
         .then((asset) => {
           this.transitionTo('form-edit', {assetid: asset.uid});
         })
     } else {
       // update existing
       var assetId = this.props.params.assetid;
-      actions.resources.updateAsset(assetId, params)
+      actions.resources.updateOnlyAsset(assetId, params)
         .then(() => {
           this.saveFormComplete();
         });
