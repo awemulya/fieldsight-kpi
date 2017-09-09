@@ -333,7 +333,8 @@ actions.resources.updateAsset.listen(function(uid, values){
     dataInterface.patchAsset(uid, values)
       .done(function(asset){
       //dataInterface.deployAsset(asset, true);
-        actions.resources.deployAsset(asset, true);
+      console.log(asset.has_deployment);
+        actions.resources.deployAsset(asset, asset.has_deployment);
         //notify(t('successfully updated'));
         //resolve(asset);
       })
