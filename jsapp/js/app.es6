@@ -1477,8 +1477,10 @@ var FormEnketoPreview = React.createClass({
     }
   },
   routeBack () {
-    var params = this.context.router.getCurrentParams();
-    this.transitionTo('form-landing', {assetid: params.assetid});
+    console.log(stores.session.currentAccount.kobocat_url+"/forms/assigned/");
+    window.location.href = stores.session.currentAccount.kobocat_url+"/forms/assigned/";
+    //var params = this.context.router.getCurrentParams();
+    //this.transitionTo('form-landing', {assetid: params.assetid});
   },
   render () {
     if (this.state.error) {
