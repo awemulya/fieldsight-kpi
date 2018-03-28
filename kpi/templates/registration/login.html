@@ -17,15 +17,15 @@
                 {% csrf_token %}
                 {% if form_errors %}
                 <p class="alert-error"
-                   role='alert'>{% trans "Your email and password didn't match. Please try again." %}</p>
+                   role='alert'>{% trans "Username and password didn't match. Please try again." %}</p>
                 {% endif %}
                 {% if inactive %}
                 <p class="alert-error"
                    role='alert'>{% trans "Your Account is Inactive Please Contact Administrator." %}</p>
                 {% endif %}
                 {{ form.non_field_errors }}
-                <p>{{ form.email.errors.as_text }}</p>
-                <input type="email" class="form-control" placeholder="User Email" name="email" value="{{ username }}" autofocus>
+                <p>{{ form.usernmae.errors.as_text }}</p>
+                <input type="text" class="form-control" placeholder="User Email" name="username" value="{{ username }}" autofocus>
                 
                 <p>{{ form.password.errors.as_text }}</p>
 
@@ -58,7 +58,7 @@
  {{ block.super }}
   <script>
   $(function () {
-    $('form.registration input#id_username').attr('placeholder', 'Email');
+    $('form.registration input#id_username').attr('placeholder', 'User');
     $('form.registration input#id_password').attr('placeholder', 'Password');
     $('form.registration > p > label').addClass('hidden');
   });

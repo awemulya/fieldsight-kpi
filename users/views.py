@@ -15,7 +15,10 @@ from .forms import LoginForm
 
 def web_authenticate(username=None, password=None):
         try:
-            user = User.objects.get(email__iexact=username)
+            if "@" in username:
+                user = User.objects.get(email__iexact=username)
+            else:
+                user = User.objects.get(username__iexact=username)
             if user.check_password(password):
                 return authenticate(username=user.username, password=password)
         except User.DoesNotExist:
@@ -28,9 +31,9 @@ def web_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
+            username = form.cleaned_data['username']
             pwd = form.cleaned_data['password']
-            user = web_authenticate(username=email, password=pwd)
+            user = web_authenticate(username=username, password=pwd)
             if user is not None:
                 if user.is_active:
                     login(request, user)

@@ -4,8 +4,8 @@ from users.models import UserProfile
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label='Your Email', max_length=100)
-    password = forms.CharField(label='Your Email', max_length=100)
+    username = forms.CharField(label='Username', max_length=100)
+    password = forms.CharField(label='Password', max_length=100)
 
 
 class ProfileForm(forms.ModelForm):
